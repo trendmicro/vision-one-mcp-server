@@ -1,0 +1,15 @@
+#!/bin/bash
+
+go install github.com/google/go-licenses@latest
+
+rm -rf third-party
+mkdir -p third-party
+export TEMPDIR="$(mktemp -d)"
+
+trap "rm -fr ${TEMPDIR}" EXIT
+
+for goos in linux darwin windows ; do
+    GOOS="${goos}" go-licenses save ./... --save_path="${TEMPDIR}/${goos}" --force || echo "Ignore warnings"
+    GOOS="${goos}" go-licenses report ./... --template .github/licenses.tmpl > third-party-licenses.${goos}.md || echo "Ignore warnings"
+    cp -fR "${TEMPDIR}/${goos}"/* third-party/
+done
