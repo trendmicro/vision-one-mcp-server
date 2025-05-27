@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"os"
 	"runtime/debug"
+	"slices"
 
 	"github.com/trendmicro/vision-one-mcp-server/internal/v1mcp"
 )
@@ -65,16 +66,14 @@ func validateRegion(region string) error {
 	b, _ := json.Marshal(validRegions)
 
 	if region == "" {
-		return errors.New(fmt.Sprintf("missing region, please provide one of %s", string(b)))
+		return fmt.Errorf("missing region, please provide one of %s", string(b))
 	}
 
-	for _, r := range validRegions {
-		if r == region {
-			return nil
-		}
+	if !slices.Contains(validRegions, region) {
+		return fmt.Errorf("invalid region %q, provide on of %s", region, string(b))
 	}
 
-	return errors.New(fmt.Sprintf("invalid region %q, provide on of %s", region, string(b)))
+	return nil
 }
 
 func getVersion() string {

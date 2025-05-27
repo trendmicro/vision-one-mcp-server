@@ -9,7 +9,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-func requiredValue[T comparable](property string, vals map[string]interface{}) (T, error) {
+func requiredValue[T comparable](property string, vals map[string]any) (T, error) {
 	var defaultValue T
 
 	if _, ok := vals[property]; !ok {
@@ -27,7 +27,7 @@ func requiredValue[T comparable](property string, vals map[string]interface{}) (
 	return vals[property].(T), nil
 }
 
-func optionalIntValue(property string, vals map[string]interface{}) (int, error) {
+func optionalIntValue(property string, vals map[string]any) (int, error) {
 	val, err := optionalValue[float64](property, vals)
 	if err != nil {
 		return 0, err
@@ -35,7 +35,7 @@ func optionalIntValue(property string, vals map[string]interface{}) (int, error)
 	return int(val), nil
 }
 
-func optionalTimeValue(property string, vals map[string]interface{}) (time.Time, error) {
+func optionalTimeValue(property string, vals map[string]any) (time.Time, error) {
 	val, err := optionalValue[string](property, vals)
 	if err != nil {
 		return time.Time{}, err
@@ -52,7 +52,7 @@ func optionalTimeValue(property string, vals map[string]interface{}) (time.Time,
 	return t, nil
 }
 
-func optionalValue[T comparable](property string, vals map[string]interface{}) (T, error) {
+func optionalValue[T comparable](property string, vals map[string]any) (T, error) {
 	var defaultValue T
 
 	if _, ok := vals[property]; !ok {
@@ -86,7 +86,10 @@ func handleStatusResponse(r *http.Response, err error, expectedStatusCode int, m
 		return nil, err
 	}
 
-	defer r.Body.Close()
+	defer func() {
+		_ = r.Body.Close()
+	}()
+
 
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -94,7 +97,7 @@ func handleStatusResponse(r *http.Response, err error, expectedStatusCode int, m
 	}
 
 	if r.StatusCode != expectedStatusCode {
-		return mcp.NewToolResultError(fmt.Sprintf("msg: %s", string(body))), nil
+		return mcp.NewToolResultError(fmt.Sprintf("%s: %s", msg, string(body))), nil
 	}
 
 	return mcp.NewToolResultText(string(body)), nil
