@@ -17,7 +17,6 @@ func (c *V1ApiClient) WorkbenchGetAlertDetails(alertId string) (*http.Response, 
 	return c.genericGet(fmt.Sprintf("v3.0/workbench/alerts/%s", alertId))
 }
 
-
 func (c *V1ApiClient) WorkbenchGetAlertNotes(alertId string, filter string, qp QueryParameters) (*http.Response, error) {
 	return c.searchAndFilter(
 		"v3.0/workbench/alerts/%s/notes",
