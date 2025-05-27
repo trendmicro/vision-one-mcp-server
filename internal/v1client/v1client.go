@@ -83,24 +83,6 @@ func withUrlParameters(params url.Values) requestOptionFunc {
 	}
 }
 
-func withNextLink(nextUrl, tokenName string) requestOptionFunc {
-	u, err := url.Parse(nextUrl)
-	if err != nil {
-		return func(r *http.Request) {}
-	}
-
-	nextToken := u.Query().Get(tokenName)
-	if nextToken == "" {
-		return func(r *http.Request) {}
-	}
-
-	return func(r *http.Request) {
-		vals := r.URL.Query()
-		vals.Add(tokenName, nextToken)
-		r.URL.RawQuery = vals.Encode()
-	}
-}
-
 func withContentTypeJSON() requestOptionFunc {
 	return func(r *http.Request) {
 		r.Header.Add("content-type", "application/json")

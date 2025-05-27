@@ -63,7 +63,7 @@ func RunMcpStdioServer(cfg ServerConfig) error {
 	case <-ctx.Done():
 		fmt.Fprintf(os.Stderr, "shutting down server...\n")
 	case e := <-serverError:
-		return fmt.Errorf("server encountered error: %w\n", e)
+		return fmt.Errorf("server encountered error: %w", e)
 	}
 
 	return nil
