@@ -172,8 +172,3 @@ Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vi
 ### Filtering Attack Surface Devices
 
 ![filtering attack surface devicies](./doc/images/example-attack-surface-devices.png)
-
-## TODO
-
-- Add to TM github.
-- Internal installation instructions.
