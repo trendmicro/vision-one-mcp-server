@@ -27,8 +27,6 @@ This allows users to harness the power of Large Language Models (LLM) to interpr
 
 ### Installation
 
-**Note** The below only works if you have SSH keys set up (and some other workarounds) with GitHub. This will not be required for customers if in a public facing repo. For internal users the manual installation is recommended.
-
 ```bash
 go install github.com/trendmicro/vision-one-mcp-server/cmd/v1-mcp-server@latest
 ```
