@@ -92,7 +92,7 @@ func addWriteToolset(
 func addWriteTools(s *mcpserver.MCPServer, serverTools ...mcpserver.ServerTool) {
 	for _, tool := range serverTools {
 		if *tool.Tool.Annotations.ReadOnlyHint {
-			panic(fmt.Sprintf("tool %q shouldn't be marked as being readonly"))
+			panic(fmt.Sprintf("tool %q shouldn't be marked as being readonly", tool.Tool.Name))
 		}
 	}
 	s.AddTools(serverTools...)
