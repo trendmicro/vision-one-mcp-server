@@ -1,6 +1,9 @@
 # Ensures the project can be compiled.
 name: Go
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ "main" ]
