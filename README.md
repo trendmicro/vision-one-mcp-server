@@ -170,3 +170,15 @@ Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vi
 ### Filtering Attack Surface Devices
 
 ![filtering attack surface devicies](./doc/images/example-attack-surface-devices.png)
+
+## Change Log
+
+See [releases](https://github.com/trendmicro/vision-one-mcp-server/releases/).
+
+## Contibuting
+
+Please see the [contributing](./CONTRIBUTING.md) guide.
+
+## Code of Conduct
+
+This project adopts the [Go Code of Conduct](https://go.dev/conduct).
