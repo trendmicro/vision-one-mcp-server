@@ -804,3 +804,444 @@ Filter for retrieving a subset of Workbench alert notes. Supported fields and op
 
 Note: Include this parameter in every request that generates paginated output.
 `
+
+var FilterContainerVuln = `
+string <= 1024 characters
+Example: riskLevel eq 'high'
+
+The filter for retrieving a subset of the image vulnerabilities list. Include this header in every request that generates paginated output.
+
+Supported fields and operators:
+Field 	Description 	Allowed values
+clusterType 	The type of cluster 	kubernetes, amazonecs
+name 	The name of the vulnerability 	Any value
+clusterId 	The ID of the cluster 	Any value
+imageId 	The The ID of the container image 	Any value
+riskLevel 	The risk level of the vulnerability 	high, medium, low
+
+Supported operators:
+
+    eq - Operator "equal to"
+    and - Operator "and"
+`
+
+var FilterK8s = `
+string <= 1024 characters
+Example: name eq 'example_cluster'
+
+The filter for retrieving a subset of the Kubernetes cluster list, which is included in every request that generates paginated output.
+
+Supported fields:
+
+    launchType - The launch type of the cluster. Support values: [ EC2, FARGATE, NODEPOOL, VIRTUALNODE, STANDARD, AUTOPILOT, MANAGED ]
+    name - The name of the Kubernetes cluster
+    orchestrator - The orchestrator of the Cluster. Support values: [ Self-managed, Amazon EKS, Microsoft AKS, Google GKE, Alibaba Cloud ACK ]
+    policyId - The ID of the policy associated with the cluster
+    protectionStatus - The protection status of the cluster. Supported values: [ UNKNOWN, HEALTHY, UNHEALTHY, WARNING ]
+    runtimeSecurityEnabled - Whether Runtime Security is enabled for the cluster. Supported values: [ true, false ]
+    vulnerabilityScanEnabled - Whether Runtime Vulnerability Scanning is enabled for the cluster. Supported values: [ true, false ]
+    malwareScanEnabled - Whether Runtime Malware Scanning is enabled for the cluster. Supported values: [ true, false ]
+    groupId | The ID of the group associated with the cluster.
+
+Supported operators:
+
+    eq - Operator "equal to"
+    contains - String partial match
+    not - Operator "not"
+    or - Operator "or"
+    () - Symbols for grouping operands
+`
+
+var FilterECS = `
+string <= 1024 characters
+Example: name eq 'example_cluster'
+
+The filter for retrieving a subset of Amazon ECS clusters. Include this parameter in every request that generates paginated output
+
+Supported fields:
+
+    name - The name of the Amazon ECS cluster
+
+Supported operators:
+
+    eq - Operator "equal to"
+    contains - String partial match
+    not - Operator "not"
+    or - Operator "or"
+`
+
+var FilterK8Images = `
+string <= 1024 characters
+Example: id eq 'imageId_1' and clusterId eq 'clusterId_1'
+
+The filter for retrieving a subset of the Kubernetes image list. Include this parameter in every request that generates paginated output
+
+Supported fields:
+Field 	Description
+id 	The ID of the Kubernetes image
+clusterid 	The ID of the Kubernetes cluster
+digest 	The container image digest
+repository 	The repository of the container image
+registry 	The registry of the container image
+
+Supported operators:
+
+    eq - Operator "equal to"
+    and - Operator "and"
+    or - Operator "or"
+    not - Operator "not"
+    () - Symbols for grouping operands
+`
+
+var FilterEndpoints = `
+string <= 1024 characters
+Example: not (osName eq 'Windows') and eppAgentAntiMalwareScans eq 'enabled'
+
+Filter for retrieving a subset of the endpoint information list.
+
+Supported fields:
+
+Field
+	
+
+Description
+	
+
+Supported values
+
+endpointName
+	
+
+The name of the endpoint.
+	
+
+Any value
+
+agentGuid
+	
+
+The ID of the endpoint on the Trend Vision One platform.
+	
+
+Any value
+
+type
+	
+
+The type of endpoint.
+	
+
+desktop,server
+
+edrSensorAdvancedRiskTelemetryStatus
+	
+
+The status of the advanced risk telemetry on the endpoint.
+	
+
+enabled,disabled,enabling,disabling,unknown
+
+edrSensorConnectivity
+	
+
+The connectivity of the sensor installed on the endpoint.
+	
+
+connected,disconnected
+
+eppAgentProtectionManager
+	
+
+The name of your protection manager.
+	
+
+Any value
+
+eppAgentEndpointGroup
+	
+
+The name of the endpoint group.
+	
+
+Any value
+
+osName
+	
+
+The operating system of the endpoint.
+	
+
+Any value
+
+osPlatform
+	
+
+The platform of the operating system of the endpoint.
+	
+
+windows,mac,linux,unix,unknown
+
+serviceGatewayOrProxy
+	
+
+The endpoints routed through a Service Gateway or Proxy
+	
+
+Any value that follows the format described in the 'serviceGatewayOrProxy' field
+
+osArchitecture
+	
+
+The type of operating system running on the endpoint.
+	
+
+x86,x86_64,ppc64le,sparc,powerpc,aarch64
+
+versionControlPolicy
+	
+
+The name of the version control policy.
+	
+
+Any value
+
+agentUpdateStatus
+	
+
+The status of the agent update policy.
+	
+
+onSchedule,pause,disable,notSupported
+
+agentUpdatePolicy
+	
+
+The agent update policy version used for version control policy APIs.
+	
+
+Any value
+
+creditAllocatedLicenses
+	
+
+The features enabled on the endpoint
+	
+
+Endpoint sensor detection and response,Advanced Endpoint Security,Advanced Server & Workload Protection,SAP Scanner for Trend Vision One - Endpoint Security (Pro)
+
+securityPolicy
+	
+
+The name of the security policy applied to the endpoint
+	
+
+Any value
+
+securityPolicyOverriddenStatus
+	
+
+Whether the endpoint security policy was overridden
+	
+
+enabled,disabled
+
+edrSensorStatus
+	
+
+The status of the endpoint sensor detection and response.
+	
+
+enabled,disabled,enabling,disabling,unknown
+
+edrSensorComponentUpdatePolicy
+	
+
+The version control update policy for the module/pattern of the sensor installed on the endpoint.
+	
+
+nrepresents the latest version.n - xrepresents x snapshots prior (Example:n - 2).
+
+edrSensorComponentUpdateStatus
+	
+
+The status of the module/pattern updates of the sensor installed on the endpoint.
+	
+
+pause,onSchedule,notSupported
+
+eppAgentStatus
+	
+
+The connectivity status of the endpoint protection agent.
+	
+
+on,off,unknown
+
+eppAgentPolicyName
+	
+
+The name of a policy from your protection manager.
+	
+
+Any value
+
+isolationStatus
+	
+
+Indicates if an endpoint is isolated.
+	
+
+on,off,unknown
+
+eppAgentComponentVersion
+	
+
+The agent component version.
+	
+
+outdatedVersion,latestVersion,unknownVersions,controlledLatestVersion
+
+eppAgentComponentUpdatePolicy
+	
+
+The update policy for the module/pattern of the agent installed on the endpoint.
+	
+
+nrepresents the latest version.n - xrepresents x snapshots prior (Example:n - 2).
+
+eppAgentComponentUpdateStatus
+	
+
+The status of the module/pattern updates of the agent installed on the endpoint.
+	
+
+pause,onSchedule,notSupported
+
+    eppAgentAntiMalwareScans
+
+    eppAgentBehaviorMonitoring
+
+    eppAgentPredictiveMachineLearning
+
+    eppAgentWebReputation
+
+    eppAgentSuspiciousConnectionSettings
+
+    eppAgentVulnerabilityProtection
+
+    eppAgentDeviceControl
+
+    eppAgentApplicationControl
+
+    eppAgentFirewall
+
+    eppAgentIntegratedEndpointSensor
+
+    eppAgentDataLossPrevention
+
+    eppAgentSmartFeedback
+
+    eppAgentAntiMalware
+
+    eppAgentActivityMonitoring
+
+    eppAgentIntrusionPreventionSystem
+
+    eppAgentLogInspection
+
+    eppAgentIntegrityMonitoring
+
+    eppAgentAgentSelfProtection
+
+    eppAgentSAPScanner
+
+    eppAgentSecurityAgentPasswordUnlock
+
+	
+
+The status of the features supported by the endpoint protection agent.
+	
+
+enabled,disabled,notSupported
+
+availableActions
+	
+
+Allows you to select the discoverable endpoints that may require attention.
+	
+
+    immediateActionRequired: An issue occurred on the endpoint that requires user intervention.
+
+    unmanaged: The endpoints are discoverable on your network but do not have any available protection or sensor agent program installed.
+
+    sensorUpdateRequired: The endpoint has an older version of the Endpoint Sensor component installed (including Activity Monitoring and Apex One Endpoint Sensor) and should update to the latest Trend Vision One version.
+
+    sepMaintenanceRecommended: The Standard Endpoint Protection endpoint does not have XDR Endpoint Sensor. The Detection and Response feature is off.
+
+    a1MaintenanceRecommended: The Apex One endpoint does not have XDR Endpoint Sensor. The Detection and Response feature is off.
+
+    swpMaintenanceRecommended: The Server & Workload Protection endpoint does not have XDR Endpoint Sensor. The Detection and Response feature is off.
+
+    c1MaintenanceRecommended: The Cloud One endpoint does not have XDR Endpoint Sensor. The Detection and Response feature is off.
+
+    sensorDisabled: The Managed Endpoint and Detection and Response features are off. The endpoint has XDR Endpoint Sensor.
+
+securityDeployment
+	
+
+Allows you to select the endpoints that have a protection or sensor agent installed.
+	
+
+    managed: All endpoints on your network that have a protection or sensor agent installed
+
+    userProtection: All endpoints that have the Standard Endpoint Protection agent installed (includes endpoints that also have the Endpoint sensor detection and response feature enabled)
+
+    workloadProtection: All endpoints that have the Server & Workload agent installed (includes endpoints that also have the Endpoint sensor detection and response feature enabled)
+
+    sensorOnly: All endpoints that only have the Sensor agent installed (endpoints that are not protected by a Standard Endpoint Protection or Server & Workload Protection agent)
+
+    connectedEndpointProtection: All endpoints that have protection or sensor agent installed from a connected product.
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands
+
+Additional functions:
+Function 	Description 	Notes
+hassubset() 	Checks if the array contains a subset 	Applicable to creditAllocatedLicenses only
+
+Note:
+
+    for edrSensorStatus and edrSensorAdvancedRiskTelemetryStatus, When filtering for all xxabled endpoionts as the same as the UI, you can filter by status eq xxabled or status eq xxabling.
+    immediateActionRequired is mutually exclusive with other filters.
+    You can't use availableActions and securityDeployment together.
+    If a query contains both eppAgent<FeatureName> and eppComponentVersion, only one value of eppComponentVersion is included in the results.
+    availableActions and securityDeployment are not returned in response.
+
+`
+
+var FilterEndpointTasks = `
+string <= 1024 characters
+Example: status eq 'succeeded'
+
+The filter for retrieving a subset of the task list.
+
+Supported fields:
+Field 	Description 	Supported values
+id 	The ID of the task 	Any value
+agentGuid 	The ID of the endpoint on the Trend Vision One platform 	Any value
+status 	The status of the task 	running,succeeded,failed
+action 	The type of the task 	export,delete
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands
+`

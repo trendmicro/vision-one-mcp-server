@@ -11,24 +11,24 @@ import (
 )
 
 var ToolsetsReadOnlyCREM = []func(client *v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolCREMAttackSurfaceDevicesList,
-	ToolCREMAttackSurfaceDomainAccountsList,
-	ToolCREMAttackSurfaceServiceAccountsList,
-	ToolCREMAttackSurfaceGlobalFQDNsList,
-	ToolCREMAttackSurfacePublicIPsList,
-	ToolCREMAttackSurfaceCloudAssetsList,
-	ToolCREMAttackSurfaceHighRiskUsersList,
-	ToolCREMAttackSurfaceCloudAssetProfileGet,
-	ToolCREMAttackSurfaceCloudAssetRiskIndicatorsList,
-	ToolCREMAttackSurfaceLocalAppsList,
-	ToolCREMAttackSurfaceLocalAppProfileGet,
-	ToolCREMAttackSurfaceLocalAppRiskIndicatorsList,
-	ToolCREMAttackSurfaceLocalAppDevicesList,
-	ToolCREMAttackSurfaceLocalAppExecutableFilesList,
-	ToolCREMAttackSurfaceCustomTagsList,
+	toolCREMAttackSurfaceDevicesList,
+	toolCREMAttackSurfaceDomainAccountsList,
+	toolCREMAttackSurfaceServiceAccountsList,
+	toolCREMAttackSurfaceGlobalFQDNsList,
+	toolCREMAttackSurfacePublicIPsList,
+	toolCREMAttackSurfaceCloudAssetsList,
+	toolCREMAttackSurfaceHighRiskUsersList,
+	toolCREMAttackSurfaceCloudAssetProfileGet,
+	toolCREMAttackSurfaceCloudAssetRiskIndicatorsList,
+	toolCREMAttackSurfaceLocalAppsList,
+	toolCREMAttackSurfaceLocalAppProfileGet,
+	toolCREMAttackSurfaceLocalAppRiskIndicatorsList,
+	toolCREMAttackSurfaceLocalAppDevicesList,
+	toolCREMAttackSurfaceLocalAppExecutableFilesList,
+	toolCREMAttackSurfaceCustomTagsList,
 }
 
-func ToolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_devices_list",
@@ -121,7 +121,7 @@ func ToolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.Se
 	}
 }
 
-func ToolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_domain_accounts_list",
@@ -176,7 +176,7 @@ func ToolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpse
 	}
 }
 
-func ToolCREMAttackSurfaceGlobalFQDNsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceGlobalFQDNsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_global_fqdns_list",
@@ -229,7 +229,7 @@ func ToolCREMAttackSurfaceGlobalFQDNsList(client *v1client.V1ApiClient) mcpserve
 	}
 }
 
-func ToolCREMAttackSurfacePublicIPsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfacePublicIPsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_public_ips_list",
@@ -282,7 +282,7 @@ func ToolCREMAttackSurfacePublicIPsList(client *v1client.V1ApiClient) mcpserver.
 	}
 }
 
-func ToolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_cloud_assets_list",
@@ -371,7 +371,7 @@ func ToolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserve
 	}
 }
 
-func ToolCREMAttackSurfaceHighRiskUsersList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceHighRiskUsersList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_high_risk_users_list",
@@ -425,7 +425,7 @@ func ToolCREMAttackSurfaceHighRiskUsersList(client *v1client.V1ApiClient) mcpser
 	}
 }
 
-func ToolCREMAttackSurfaceServiceAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceServiceAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_service_accounts_list",
@@ -472,7 +472,7 @@ func ToolCREMAttackSurfaceServiceAccountsList(client *v1client.V1ApiClient) mcps
 	}
 }
 
-func ToolCREMAttackSurfaceCloudAssetProfileGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceCloudAssetProfileGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_cloud_asset_profile_get",
@@ -494,7 +494,7 @@ func ToolCREMAttackSurfaceCloudAssetProfileGet(client *v1client.V1ApiClient) mcp
 	}
 }
 
-func ToolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_cloud_asset_risk_indicators_list",
@@ -553,7 +553,7 @@ func ToolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiCli
 	}
 }
 
-func ToolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_local_apps_list",
@@ -610,7 +610,7 @@ func ToolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.
 	}
 }
 
-func ToolCREMAttackSurfaceLocalAppProfileGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceLocalAppProfileGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_local_app_profile_get",
@@ -635,7 +635,7 @@ func ToolCREMAttackSurfaceLocalAppProfileGet(client *v1client.V1ApiClient) mcpse
 	}
 }
 
-func ToolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_local_app_risk_indicators_list",
@@ -697,7 +697,7 @@ func ToolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClien
 	}
 }
 
-func ToolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_local_app_devices_list",
@@ -759,7 +759,7 @@ func ToolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcps
 	}
 }
 
-func ToolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_local_app_executable_files_list",
@@ -821,7 +821,7 @@ func ToolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClie
 	}
 }
 
-func ToolCREMAttackSurfaceCustomTagsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCREMAttackSurfaceCustomTagsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"crem_attack_surface_custom_tags_list",
