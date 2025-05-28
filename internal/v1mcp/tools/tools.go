@@ -90,7 +90,6 @@ func handleStatusResponse(r *http.Response, err error, expectedStatusCode int, m
 		_ = r.Body.Close()
 	}()
 
-
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return nil, err

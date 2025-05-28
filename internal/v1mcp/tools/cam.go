@@ -11,15 +11,15 @@ import (
 )
 
 var ToolsetsReadOnlyCAM = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolCAMAwsAccountsList,
-	ToolCAMAwsAccountGet,
-	ToolCAMGcpAccountsList,
-	ToolCAMGcpAccountGet,
-	ToolCAMAlibabaAccountsList,
-	ToolCAMAlibabaAccountGet,
+	toolCAMAwsAccountsList,
+	toolCAMAwsAccountGet,
+	toolCAMGcpAccountsList,
+	toolCAMGcpAccountGet,
+	toolCAMAlibabaAccountsList,
+	toolCAMAlibabaAccountGet,
 }
 
-func ToolCAMAwsAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMAwsAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_aws_accounts_list",
@@ -62,7 +62,7 @@ func ToolCAMAwsAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolCAMAwsAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMAwsAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_aws_account_get",
@@ -83,7 +83,7 @@ func ToolCAMAwsAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolCAMGcpAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMGcpAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_gcp_accounts_list",
@@ -123,7 +123,7 @@ func ToolCAMGcpAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolCAMGcpAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMGcpAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_gcp_account_get",
@@ -145,7 +145,7 @@ func ToolCAMGcpAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolCAMAlibabaAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMAlibabaAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_alibaba_accounts_list",
@@ -184,7 +184,7 @@ func ToolCAMAlibabaAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTo
 	}
 }
 
-func ToolCAMAlibabaAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCAMAlibabaAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cam_alibaba_account_get",
