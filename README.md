@@ -148,6 +148,27 @@ Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vi
 | `email_security_domains_list` | Returns all email domains managed by an email protection solution. | `read` |
 | `email_security_servers_list` | Returns all email servers managed by an on-premises email protection solution. | `read` |
 
+### Container Security
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `container_security_ecs_clusters_list` | Displays all registered Amazon Elastic Container Service (ECS) clusters in a paginated list. | `read` |
+| `container_security_image_vulnerabilities_list` | Displays the container image vulnerabilities detected in Kubernetes and Amazon ECS clusters for your account. | `read` |
+| `container_security_k8_cluster_get` | Displays the details of the specified Kubernetes cluster. | `read` |
+| `container_security_k8_clusters_list` | Displays all registered Kubernetes clusters. | `read` |
+| `container_security_k8_images_list` | Displays the Kubernetes images that are running in all clusters for your account. | `read` |
+
+### Endpoint Security
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `endpoint_security_agent_update_policies_list` | Displays the available agent update policies. | `read` |
+| `endpoint_security_endpoint_get` | Displays the detailed profile of the specified endpoint. | `read` |
+| `endpoint_security_endpoints_list` | Displays a detailed list of your endpoints. | `read` |
+| `endpoint_security_task_get` | Displays the status of the specified task. | `read` |
+| `endpoint_security_tasks_list` | Displays the tasks of your endpoints in a paginated list. | `read` |
+| `endpoint_security_version_control_policies_list` | Displays your Endpoint Version Control policies. | `read` |
+
 ## Architecture
 
 ![high-level architecture](./doc/images/trend-vision-one-mcp.png)

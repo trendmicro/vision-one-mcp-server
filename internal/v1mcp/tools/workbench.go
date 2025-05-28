@@ -11,12 +11,12 @@ import (
 )
 
 var ToolsetsReadOnlyWorkench = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolWorkbenchAlertsList,
-	ToolWorkbenchAlertDetailGet,
-	ToolObservedAttackTechniquesList,
+	toolWorkbenchAlertsList,
+	toolWorkbenchAlertDetailGet,
+	toolObservedAttackTechniquesList,
 }
 
-func ToolWorkbenchAlertsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolWorkbenchAlertsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"workbench_alerts_list",
@@ -64,7 +64,7 @@ func ToolWorkbenchAlertsList(client *v1client.V1ApiClient) mcpserver.ServerTool 
 	}
 }
 
-func ToolWorkbenchAlertDetailGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolWorkbenchAlertDetailGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"workbench_alert_detail_get",
@@ -150,7 +150,7 @@ func TookWorkbenchAlertNotesList(client *v1client.V1ApiClient) mcpserver.ServerT
 	}
 }
 
-func ToolObservedAttackTechniquesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolObservedAttackTechniquesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"workbench_observed_attack_techniques_list",

@@ -11,12 +11,12 @@ import (
 )
 
 var ToolsetsReadOnlyEmail = []func(client *v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolEmailSecurityAccountsList,
-	ToolEmailSecurityDomainsList,
-	ToolEmailSecurityServersList,
+	toolEmailSecurityAccountsList,
+	toolEmailSecurityDomainsList,
+	toolEmailSecurityServersList,
 }
 
-func ToolEmailSecurityAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolEmailSecurityAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"email_security_accounts_list",
@@ -52,7 +52,7 @@ func ToolEmailSecurityAccountsList(client *v1client.V1ApiClient) mcpserver.Serve
 	}
 }
 
-func ToolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"email_security_domains_list",
@@ -79,7 +79,7 @@ func ToolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.Server
 	}
 }
 
-func ToolEmailSecurityServersList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolEmailSecurityServersList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"email_security_servers_list",

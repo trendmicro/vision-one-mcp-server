@@ -12,18 +12,18 @@ import (
 )
 
 var ToolsetsReadOnlyIAM = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolIamApiKeysList,
-	ToolIamAccountsList,
+	toolIamApiKeysList,
+	toolIamAccountsList,
 }
 
 var ToolsetsWriteIAM = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolIamApiKeysDelete,
-	ToolIamAccountInvite,
-	ToolIamAccountUpdate,
-	ToolIamAccountDelete,
+	toolIamApiKeysDelete,
+	toolIamAccountInvite,
+	toolIamAccountUpdate,
+	toolIamAccountDelete,
 }
 
-func ToolIamApiKeysList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamApiKeysList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_api_keys_list",
@@ -82,7 +82,7 @@ func ToolIamApiKeysList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_api_keys_delete",
@@ -102,7 +102,7 @@ func ToolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			keysToDelete := []string{}
-			if keyIds, ok := request.Params.Arguments["apiKeyIds"].([]interface{}); ok && len(keyIds) > 0 {
+			if keyIds, ok := request.Params.Arguments["apiKeyIds"].([]any); ok && len(keyIds) > 0 {
 				for _, id := range keyIds {
 					keyId, ok := id.(string)
 					if !ok {
@@ -117,7 +117,7 @@ func ToolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolIamAccountInvite(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamAccountInvite(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_account_invite",
@@ -176,7 +176,7 @@ func ToolIamAccountInvite(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolIamAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_accounts_list",
@@ -208,7 +208,7 @@ func ToolIamAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolIamAccountUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamAccountUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_account_update",
@@ -264,7 +264,7 @@ func ToolIamAccountUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	}
 }
 
-func ToolIamAccountDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolIamAccountDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"iam_account_delete",

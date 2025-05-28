@@ -11,18 +11,18 @@ import (
 )
 
 var ToolsetsReadOnlyCloudPosture = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolCloudPostureAccountsList,
-	ToolCloudPostureAccountChecksList,
-	ToolCloudPostureTemplateScannerRun,
-	ToolCloudPostureAccountScanSettingsGet,
+	toolCloudPostureAccountsList,
+	toolCloudPostureAccountChecksList,
+	toolCloudPostureTemplateScannerRun,
+	toolCloudPostureAccountScanSettingsGet,
 }
 
 var ToolsetsWriteCloudPosture = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
-	ToolCloudPostureAccountScan,
-	ToolCloudPostureAccountScanSettingsUpdate,
+	toolCloudPostureAccountScan,
+	toolCloudPostureAccountScanSettingsUpdate,
 }
 
-func ToolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_accounts_list",
@@ -61,7 +61,7 @@ func ToolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.Server
 	}
 }
 
-func ToolCloudPostureAccountChecksList(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureAccountChecksList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_checks_list",
@@ -115,7 +115,7 @@ func ToolCloudPostureAccountChecksList(client *v1client.V1ApiClient) mcpserver.S
 	}
 }
 
-func ToolCloudPostureTemplateScannerRun(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureTemplateScannerRun(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_template_scanner_run",
@@ -147,7 +147,7 @@ func ToolCloudPostureTemplateScannerRun(client *v1client.V1ApiClient) mcpserver.
 	}
 }
 
-func ToolCloudPostureAccountScanSettingsGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureAccountScanSettingsGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan_settings_get",
@@ -171,7 +171,7 @@ func ToolCloudPostureAccountScanSettingsGet(client *v1client.V1ApiClient) mcpser
 	}
 }
 
-func ToolCloudPostureAccountScan(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureAccountScan(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan",
@@ -195,7 +195,7 @@ func ToolCloudPostureAccountScan(client *v1client.V1ApiClient) mcpserver.ServerT
 	}
 }
 
-func ToolCloudPostureAccountScanSettingsUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
+func toolCloudPostureAccountScanSettingsUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan_settings_update",

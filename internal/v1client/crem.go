@@ -7,18 +7,22 @@ import (
 )
 
 type QueryParameters struct {
-	OrderBy                   string    `url:"orderBy,omitempty"`
-	Top                       int       `url:"top,omitempty"`
-	LastDetectedStartDateTime time.Time `url:"lastDetectedStartDateTime,omitempty"`
-	LastDetectedEndDateTime   time.Time `url:"lastDetectedEndDateTime,omitempty"`
-	FirstSeenStartDateTime    time.Time `url:"firstSeenStartDateTime,omitempty"`
-	FirstSeenEndDateTime      time.Time `url:"firstSeenEndDateTime,omitempty"`
-	SkipToken                 string    `url:"skipToken,omitempty"`
-	NextBatchToken            string    `url:"nextBatchToken,omitempty"`
-	NextLink                  string    `url:"-"`
+	OrderBy                string    `url:"orderBy,omitempty"`
+	Top                    int       `url:"top,omitempty"`
+	FirstSeenStartDateTime time.Time `url:"firstSeenStartDateTime,omitempty"`
+	FirstSeenEndDateTime   time.Time `url:"firstSeenEndDateTime,omitempty"`
+	SkipToken              string    `url:"skipToken,omitempty"`
+	NextBatchToken         string    `url:"nextBatchToken,omitempty"`
+	NextLink               string    `url:"-"`
 
 	StartDateTime time.Time `url:"startDateTime,omitempty"`
 	EndDateTime   time.Time `url:"endDateTime,omitempty"`
+
+	LastDetectedStartDateTime time.Time `url:"lastDetectedStartDateTime,omitempty"`
+	LastDetectedEndDateTime   time.Time `url:"lastDetectedEndDateTime,omitempty"`
+
+	FirstDetectedStartDateTime time.Time `url:"firstDetectedStartDateTime,omitempty"`
+	FirstDetectedEndDateTime   time.Time `url:"firstDetectedEndDateTime,omitempty"`
 
 	DetectedStartDateTime time.Time `url:"detectedStartDateTime,omitempty"`
 	DetectedEndDateTime   time.Time `url:"detectedEndDateTime,omitempty"`
