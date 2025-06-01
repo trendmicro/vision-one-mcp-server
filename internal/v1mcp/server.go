@@ -17,16 +17,24 @@ type ServerConfig struct {
 	ReadOnly bool
 	Version  string
 	Region   string
+	Host     string
 }
 
-func NewMcpServer(cfg ServerConfig) *mcpserver.MCPServer {
+func NewMcpServer(cfg ServerConfig) (*mcpserver.MCPServer, error) {
 	s := mcpserver.NewMCPServer(
 		"v1mcp",
 		cfg.Version,
 		mcpserver.WithLogging(),
 	)
 
-	client := v1client.NewV1ApiClient(cfg.ApiKey, cfg.Region)
+	client, err := v1client.NewV1ApiClient(v1client.ClientOptions{
+		Host:   cfg.Host,
+		Region: cfg.Region,
+		ApiKey: cfg.ApiKey,
+	})
+	if err != nil {
+		return nil, err
+	}
 	client.UserAgent = fmt.Sprintf("trend-vision-one-mcp-server/%s", cfg.Version)
 
 	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyIAM)
@@ -43,14 +51,17 @@ func NewMcpServer(cfg ServerConfig) *mcpserver.MCPServer {
 		addWriteToolset(s, client, tools.ToolsetsWriteIAM)
 	}
 
-	return s
+	return s, nil
 }
 
 func RunMcpStdioServer(cfg ServerConfig) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
-	s := NewMcpServer(cfg)
+	s, err := NewMcpServer(cfg)
+	if err != nil {
+		return fmt.Errorf("error creating mcp server: %w", err)
+	}
 
 	stdioServer := mcpserver.NewStdioServer(s)
 
