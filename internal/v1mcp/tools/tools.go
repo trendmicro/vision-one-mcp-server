@@ -10,7 +10,7 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
-var asc_desc = []string {"asc", "desc"}
+var asc_desc = []string{"asc", "desc"}
 
 // Accepts an array of keys used to sort and returns all the available combinations.
 // withOrdering("hello") -> ["hello asc", "hello desc"]

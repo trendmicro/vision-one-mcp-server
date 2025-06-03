@@ -6,7 +6,7 @@ import (
 )
 
 func TestWithOrdering(t *testing.T) {
-	expected := []string {
+	expected := []string{
 		"key asc",
 		"key desc",
 		"key2 asc",
@@ -29,8 +29,8 @@ func TestRequiredValue(t *testing.T) {
 
 func TestOptionalStrInt(t *testing.T) {
 	vals := map[string]any{
-		"top": "1",
-		"notStrInt": "notStrInt",
+		"top":        "1",
+		"notStrInt":  "notStrInt",
 		"anotherTop": 1,
 	}
 
@@ -59,7 +59,7 @@ func TestOptionalStrInt(t *testing.T) {
 }
 
 func TestOptionalValue(t *testing.T) {
-	vals := map[string]any {
+	vals := map[string]any{
 		"top": 1,
 	}
 
@@ -82,7 +82,7 @@ func TestOptionalValue(t *testing.T) {
 }
 
 func TestOptionalPointerValue(t *testing.T) {
-	vals := map[string]any {
+	vals := map[string]any{
 		"top": 1,
 	}
 
