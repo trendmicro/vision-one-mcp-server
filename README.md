@@ -76,6 +76,7 @@ Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vi
 | ------ | ----------- |
 | `-readonly` | Specify whether or not the server should run in readonly mode `readonly=true`, `readonly=false`. Default `true`. |
 | `-region` | Specify the Trend Vision One region. Regions are: `au`, `jp`, `eu`, `sg`, `in`, `us` or `mea`. |
+| `-host` | Set the Trend Vision One endpoint you want to use. Useful for interacting with internal environments. |
 
 ## Tools
 

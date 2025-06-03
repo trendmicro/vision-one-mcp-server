@@ -18,20 +18,69 @@ type V1ApiClient struct {
 	UserAgent string
 }
 
-func NewV1ApiClient(apiKey, v1Region string) *V1ApiClient {
-	var u string
-	if v1Region == "us" {
-		u = "https://api.xdr.trendmicro.com/"
-	} else {
-		u = fmt.Sprintf("https://api.%s.xdr.trendmicro.com/", v1Region)
+type ClientOptions struct {
+	ApiKey string
+	// The Vision One service region.
+	Region string
+	// The Host to use. Use for pre-prod environments. If specified will be used instead of [Region]
+	Host      string
+	UserAgent string
+}
+
+func NewV1ApiClient(co ClientOptions) (*V1ApiClient, error) {
+	if co.Host == "" && co.Region == "" {
+		panic("must specify either host or region when creating a client")
 	}
-	// We ignore the error below. We know the URL will be valid due to previous validation.
-	baseUrl, _ := url.Parse(u)
+
+	if co.Host != "" {
+		hostUrl := fmt.Sprintf("https://%s/", co.Host)
+		baseUrl, err := url.Parse(hostUrl)
+		if err != nil {
+			return nil, err
+		}
+
+		return &V1ApiClient{
+			client:  &http.Client{},
+			apiKey:  co.ApiKey,
+			baseUrl: baseUrl,
+		}, nil
+	}
+
+	baseUrl, err := getRegionURL(co.Region)
+	if err != nil {
+		return nil, err
+	}
+
 	return &V1ApiClient{
 		client:  &http.Client{},
-		apiKey:  apiKey,
+		apiKey:  co.ApiKey,
 		baseUrl: baseUrl,
+	}, nil
+}
+
+func getRegionURL(region string) (*url.URL, error) {
+	if region == "us" {
+		u, err := url.Parse("https://api.xdr.trendmicro.com/")
+		if err != nil {
+			return nil, err
+		}
+		return u, nil
 	}
+
+	if region == "jp" {
+		u, err := url.Parse("https://api.xdr.trendmicro.co.jp/")
+		if err != nil {
+			return nil, err
+		}
+		return u, nil
+	}
+
+	u, err := url.Parse(fmt.Sprintf("https://api.%s.xdr.trendmicro.com/", region))
+	if err != nil {
+		return nil, err
+	}
+
+	return u, nil
 }
 
 // requestOptionFunc is a function that modifies an HTTP request.

@@ -23,6 +23,7 @@ func run() error {
 	readOnly := flag.Bool("readonly", true, "set readonly false to allow the MCP server to perform write operations.")
 	v1Region := flag.String("region", "", "set the region of your vision one account.")
 	showVersion := flag.Bool("version", false, "print version information")
+	host := flag.String("host", "", "set the Trend Vision One endpoint you want to use. Only useful for interacting with internal environments.")
 
 	flag.Parse()
 
@@ -31,13 +32,19 @@ func run() error {
 		return nil
 	}
 
-	if err := validateRegion(*v1Region); err != nil {
-		return err
-	}
-
 	apiKey := os.Getenv("TREND_VISION_ONE_API_KEY")
 	if apiKey == "" {
 		return errors.New("TREND_VISION_ONE_API_KEY not set")
+	}
+
+	if *host != "" && *v1Region != "" {
+		return errors.New("host and region cannot be used together")
+	}
+
+	if *v1Region != "" {
+		if err := validateRegion(*v1Region); err != nil {
+			return err
+		}
 	}
 
 	version := getVersion()
@@ -47,6 +54,7 @@ func run() error {
 		ReadOnly: *readOnly,
 		Region:   *v1Region,
 		Version:  version,
+		Host:     *host,
 	}
 
 	return v1mcp.RunMcpStdioServer(serverCfg)
