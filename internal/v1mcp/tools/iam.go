@@ -34,23 +34,26 @@ func toolIamApiKeysList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterApiKeys)),
 			mcp.WithString("orderBy",
 				mcp.Enum(
-					"lastUsedDateTime asc",
-					"lastUsedDateTime desc",
-					"lastModifiedDateTime asc",
-					"lastModifiedDateTime desc",
-					"expiredDateTime asc",
-					"expiredDateTime desc",
-					"createdDateTime asc",
-					"createdDateTime desc",
+					withOrdering(
+						asc_desc,
+						"lastUsedDateTime",
+						"lastModifiedDateTime",
+						"expiredDateTime",
+						"createdDateTim",
+					)...,
 				),
 				mcp.Description("The field by which the results are sorted"),
 			),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page.")),
+			mcp.WithString(
+				"top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum("50", "100", "200"),
+			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -185,10 +188,14 @@ func toolIamAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterUserAccounts)),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page.")),
+			mcp.WithString(
+				"top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum("50", "100", "200"),
+			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

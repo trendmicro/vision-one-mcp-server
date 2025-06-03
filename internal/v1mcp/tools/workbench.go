@@ -26,7 +26,22 @@ func toolWorkbenchAlertsList(client *v1client.V1ApiClient) mcpserver.ServerTool 
 			}),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterWorkbenchAlerts)),
 			mcp.WithString("orderBy",
-				mcp.Description(tooldescriptions.WorkbenchOrderBy),
+				mcp.Description("the field to order by"),
+				mcp.Enum(withOrdering(
+					asc_desc,
+					"id",
+					"caseId",
+					"name",
+					"status",
+					"investigationResult",
+					"modelId",
+					"model",
+					"score",
+					"severity",
+					"createdDateTime",
+					"updatedDateTime",
+					"firstInvestigatedDateTime",
+				)...),
 			),
 			mcp.WithString("startDateTime", mcp.Description("The start of the data retrieval range")),
 			mcp.WithString("endDateTime", mcp.Description("The end of the data retrieval range")),
@@ -100,7 +115,24 @@ func TookWorkbenchAlertNotesList(client *v1client.V1ApiClient) mcpserver.ServerT
 				mcp.Required(),
 			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterWorkbenchNotes)),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page.")),
+			mcp.WithString(
+				"orderBy",
+				mcp.Description("the field to order by"),
+				mcp.Enum(withOrdering(
+					asc_desc,
+					"id",
+					"creatorMailAddress",
+					"creatorName",
+					"lastUpdatedBy",
+					"createdDateTime",
+					"lastUpdatedDateTime",
+				)...),
+			),
+			mcp.WithString(
+				"top",
+				mcp.Description("The number of records to display per page."),
+				mcp.Enum("50", "100", "200"),
+			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 			mcp.WithString("startDateTime", mcp.Description("The start of the data retrieval range")),
@@ -112,7 +144,7 @@ func TookWorkbenchAlertNotesList(client *v1client.V1ApiClient) mcpserver.ServerT
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -159,7 +191,10 @@ func toolObservedAttackTechniquesList(client *v1client.V1ApiClient) mcpserver.Se
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.ObservedAttackFilter)),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page.")),
+			mcp.WithString("top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum("50", "100", "200"),
+			),
 			mcp.WithString("detectedStartDateTime",
 				mcp.Description("The start of the event detection data retrieval time range in ISO 8601 format."),
 			),
@@ -176,7 +211,7 @@ func toolObservedAttackTechniquesList(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
