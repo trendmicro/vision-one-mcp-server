@@ -39,15 +39,17 @@ func toolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.Se
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterAttackSurfaceDevices)),
 			mcp.WithString("orderBy",
 				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-					"deviceName asc",
-					"deviceName desc",
+					withOrdering(
+						asc_desc,
+						"deviceName",
+						"latestRiskScore",
+					)...,
 				),
 				mcp.Description("The field by which the results are sorted"),
 			),
-			mcp.WithNumber("top",
+			mcp.WithString("top",
 				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum(cremTop()...),
 			),
 			mcp.WithString("lastDetectedStartDateTime",
 				mcp.Description("The start time of the data retrieval range, in ISO 8601 format."),
@@ -65,7 +67,7 @@ func toolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -129,14 +131,18 @@ func toolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpse
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterDomainAccounts)),
 			mcp.WithString("orderBy",
 				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-					"userAccount asc",
-					"userAccount desc",
+					withOrdering(
+						asc_desc,
+						"latestRiskScore",
+						"userAccount",
+					)...,
 				),
 				mcp.Description("The field by which the results are sorted"),
 			),
@@ -144,7 +150,7 @@ func toolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpse
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -184,20 +190,20 @@ func toolCREMAttackSurfaceGlobalFQDNsList(client *v1client.V1ApiClient) mcpserve
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterFQDNS)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "latestRiskScore")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -237,20 +243,20 @@ func toolCREMAttackSurfacePublicIPsList(client *v1client.V1ApiClient) mcpserver.
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterIps)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "latestRiskScore")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -290,13 +296,13 @@ func toolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserve
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterCloudAssets)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "latestRiskScore")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("lastDetectedStartDateTime",
@@ -315,7 +321,7 @@ func toolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserve
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -379,22 +385,24 @@ func toolCREMAttackSurfaceHighRiskUsersList(client *v1client.V1ApiClient) mcpser
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterHighRiskUsers)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-					"userName asc",
-					"userName desc",
-				),
+				mcp.Enum(withOrdering(
+					asc_desc,
+					"riskScore",
+					"userName",
+				)...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -433,20 +441,23 @@ func toolCREMAttackSurfaceServiceAccountsList(client *v1client.V1ApiClient) mcps
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterServiceAccounts)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-					"userAccount asc",
-					"userAccount desc",
+				mcp.Enum(withOrdering(
+					asc_desc,
+					"latestRiskScore",
+					"userAccount",
+				)...,
 				),
 				mcp.Description("The field by which the results are sorted"),
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -503,13 +514,16 @@ func toolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiCli
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithString("cloudAssetId", mcp.Description("The ID of the cloud asset to retrieve.")),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterCloudAssetRiskIndicators)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"detectedDateTime asc",
-					"detectedDateTime desc",
-				),
+				mcp.Enum(withOrdering(
+					asc_desc,
+					"detectedDateTime",
+				)...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
@@ -521,7 +535,7 @@ func toolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiCli
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -561,16 +575,19 @@ func toolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterLocalApps)),
 			mcp.WithString("orderBy",
 				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-					"firstSeenDateTime asc",
-					"firstSeenDateTime desc",
-					"lastDetectedDateTime asc",
-					"lastDetectedDateTime desc",
+					withOrdering(
+						asc_desc,
+						"latestRiskScore",
+						"firstSeenDateTime",
+						"lastDetectedDateTime",
+					)...,
 				),
 				mcp.Description("The field by which the results are sorted"),
 			),
@@ -578,7 +595,7 @@ func toolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -647,13 +664,13 @@ func toolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClien
 				mcp.Description("The ID of the local app to retrieve."),
 				mcp.Required(),
 			),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterLocalAppRiskIndicators)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"detectedDateTime asc",
-					"detectedDateTime desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "detectedDateTime")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
@@ -665,7 +682,7 @@ func toolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClien
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -709,13 +726,13 @@ func toolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcps
 				mcp.Description("The ID of the local app to retrieve devices for."),
 				mcp.Required(),
 			),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterLocalAppDevices)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"latestRiskScore asc",
-					"latestRiskScore desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "latestRiskScore")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
@@ -727,7 +744,7 @@ func toolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcps
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -771,13 +788,13 @@ func toolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClie
 				mcp.Description("The ID of the local app to retrieve executable files for."),
 				mcp.Required(),
 			),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterLocalAppExecutables)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"lastDetectedDateTime asc",
-					"lastDetectedDateTime desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "lastDetectedDateTime")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
@@ -789,7 +806,7 @@ func toolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClie
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -829,20 +846,20 @@ func toolCREMAttackSurfaceCustomTagsList(client *v1client.V1ApiClient) mcpserver
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithDescription("List tag definitions"),
-			mcp.WithNumber("top", mcp.Description(tooldescriptions.DefaultTop)),
+			mcp.WithString("top",
+				mcp.Enum(cremTop()...),
+				mcp.Description(tooldescriptions.DefaultTop),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterCustomTags)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"key asc",
-					"key desc",
-				),
+				mcp.Enum(withOrdering(asc_desc, "key")...),
 				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -871,5 +888,16 @@ func toolCREMAttackSurfaceCustomTagsList(client *v1client.V1ApiClient) mcpserver
 			resp, err := client.CREMListCustomTags(filter, queryParams)
 			return handleStatusResponse(resp, err, http.StatusOK, "failed to list custom tags")
 		},
+	}
+}
+
+func cremTop() []string {
+	return []string{
+		"10",
+		"50",
+		"100",
+		"200",
+		"500",
+		"1000",
 	}
 }

@@ -26,3 +26,6 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Formatting
+      run: ./script/check-gofmt

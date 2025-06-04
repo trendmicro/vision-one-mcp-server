@@ -27,7 +27,9 @@ func toolEmailSecurityAccountsList(client *v1client.V1ApiClient) mcpserver.Serve
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithNumber("top",
-				mcp.Description("The number of email accounts returned on each page. Supported range: 10-1000"),
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Min(10),
+				mcp.Max(1000),
 			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEmailAccounts)),
 		),
@@ -61,7 +63,9 @@ func toolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.Server
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithNumber("top",
-				mcp.Description("The number of email domains returned on each page. Supported range: 10-1000"),
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Min(10),
+				mcp.Max(1000),
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -73,7 +77,7 @@ func toolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.Server
 				Top: top,
 			}
 
-			resp, err := client.EmailSecurityListAccounts("", qp)
+			resp, err := client.EmailSecurityListDomains("", qp)
 			return handleStatusResponse(resp, err, http.StatusOK, "failed to list email accounts")
 		},
 	}
@@ -88,7 +92,9 @@ func toolEmailSecurityServersList(client *v1client.V1ApiClient) mcpserver.Server
 				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithNumber("top",
-				mcp.Description("The number of email servers returned on each page. Supported range: 10-1000"),
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Min(10),
+				mcp.Max(1000),
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {

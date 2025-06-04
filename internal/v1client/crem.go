@@ -49,7 +49,7 @@ func (c *V1ApiClient) CREMListAttackSurfaceDomainAccounts(filter string, queryPa
 
 func (c *V1ApiClient) CREMListAttackSurfaceServiceAccounts(filter string, queryParams QueryParameters) (*http.Response, error) {
 	return c.searchAndFilter(
-		"v3.0/asrm/attackSurfaceServiceAccoutns",
+		"v3.0/asrm/attackSurfaceServiceAccounts",
 		filter,
 		queryParams,
 	)
@@ -125,7 +125,7 @@ func (c *V1ApiClient) CREMGetAttackSurfaceLocalAppRiskIndicators(
 	queryParams QueryParameters,
 ) (*http.Response, error) {
 	return c.searchAndFilter(
-		"v3.0/asrm/attackSurfaceLocalApps/%s/riskIndicatorEvents",
+		fmt.Sprintf("v3.0/asrm/attackSurfaceLocalApps/%s/riskIndicatorEvents", resourceId),
 		filter,
 		queryParams,
 	)
@@ -137,7 +137,7 @@ func (c *V1ApiClient) CREMListAttackSurfaceLocalAppDevices(
 	queryParams QueryParameters,
 ) (*http.Response, error) {
 	return c.searchAndFilter(
-		"v3.0/asrm/attackSurfaceLocalApps/%s/devices",
+		fmt.Sprintf("v3.0/asrm/attackSurfaceLocalApps/%s/devices", resourceId),
 		filter,
 		queryParams,
 	)
@@ -149,7 +149,7 @@ func (c *V1ApiClient) CREMListAttackSurfaceLocalAppExecutableFiles(
 	queryParams QueryParameters,
 ) (*http.Response, error) {
 	return c.searchAndFilter(
-		"v3.0/asrm/attackSurfaceLocalApps/%s/executableFiles",
+		fmt.Sprintf("v3.0/asrm/attackSurfaceLocalApps/%s/executableFiles", resourceId),
 		filter,
 		queryParams,
 	)

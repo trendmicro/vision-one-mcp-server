@@ -16,6 +16,7 @@ This allows users to harness the power of Large Language Models (LLM) to interpr
 1. Your Trend Vision One API keys should be configured with minimial permissions.
 2. By default the MCP server runs in read-only mode. Be careful when running the server with `readonly=false` as it may have irreversible consequences.
 3. Data retrieved using the MCP server is processed by the LLM configured in your AI tooling. It is your responsibility to ensure that this LLM is approved by your company for processing sensitive data.
+4. This MCP server is only intended to be used with local integrations and command-line tools via the Standard Input/Output transport. You should never expose this tool to the network.
 
 ## Getting Started
 
