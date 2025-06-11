@@ -4,10 +4,25 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/mark3labs/mcp-go/mcp"
 )
+
+var asc_desc = []string{"asc", "desc"}
+
+// Accepts an array of keys used to sort and returns all the available combinations.
+// withOrdering("hello") -> ["hello asc", "hello desc"]
+func withOrdering(keywords []string, keys ...string) []string {
+	orderingKeys := make([]string, 0, len(keys)*2)
+	for _, key := range keys {
+		for _, op := range keywords {
+			orderingKeys = append(orderingKeys, fmt.Sprintf("%s %s", key, op))
+		}
+	}
+	return orderingKeys
+}
 
 func requiredValue[T comparable](property string, vals map[string]any) (T, error) {
 	var defaultValue T
@@ -33,6 +48,26 @@ func optionalIntValue(property string, vals map[string]any) (int, error) {
 		return 0, err
 	}
 	return int(val), nil
+}
+
+// optionalStrInt retrieves an optional string and converts
+// to an integer via strconv.Atoi.
+func optionalStrInt(property string, vals map[string]any) (int, error) {
+	val, err := optionalValue[string](property, vals)
+	if err != nil {
+		return 0, err
+	}
+
+	if val == "" {
+		return 0, nil
+	}
+
+	n, err := strconv.Atoi(val)
+	if err != nil {
+		return 0, err
+	}
+
+	return n, err
 }
 
 func optionalTimeValue(property string, vals map[string]any) (time.Time, error) {

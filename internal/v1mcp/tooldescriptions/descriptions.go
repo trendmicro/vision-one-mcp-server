@@ -2,7 +2,7 @@ package tooldescriptions
 
 var NextLink = "The link used to retrieve the next page of results"
 
-var DefaultTop = "The number of records to display per page. One of 10, 50, 100, 200, 500, 1000"
+var DefaultTop = "The number of records to display per page."
 
 var CAMListGCPProjectsFilterDescription = `
 string <= 254 characters

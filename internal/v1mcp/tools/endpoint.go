@@ -27,17 +27,16 @@ func toolEndpointSecurityEndpointsList(client *v1client.V1ApiClient) mcpserver.S
 			mcp.WithReadOnlyHintAnnotation(true),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEndpoints)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"eppAgentLastScannedDateTime asc",
-					"eppAgentLastScannedDateTime desc",
-					"eppAgentLastConnectedDateTime asc",
-					"eppAgentLastConnectedDateTime desc",
-					"edrSensorLastConnectedDateTime asc",
-					"edrSensorLastConnectedDateTime desc",
-					"agentGuid asc",
-					"agentGuid desc",
-				),
 				mcp.Description("The field by which the results are sorted"),
+				mcp.Enum(
+					withOrdering(
+						asc_desc,
+						"agentGuid",
+						"eppAgentLastConnectedDateTime",
+						"eppAgentLastScannedDateTime",
+						"edrSensorLastConnectedDateTime",
+					)...,
+				),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
@@ -98,13 +97,14 @@ func toolEndpointSecurityTaskList(client *v1client.V1ApiClient) mcpserver.Server
 
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEndpointTasks)),
 			mcp.WithString("orderBy",
-				mcp.Enum(
-					"createdDateTime asc",
-					"createdDateTime desc",
-					"lastActionDateTime asc",
-					"lastActionDateTime desc",
-				),
 				mcp.Description("The field by which the results are sorted"),
+				mcp.Enum(
+					withOrdering(
+						asc_desc,
+						"createdDateTime",
+						"lastActionDateTime",
+					)...,
+				),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),

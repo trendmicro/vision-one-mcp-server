@@ -27,12 +27,15 @@ func toolCAMAwsAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page")),
+			mcp.WithString("top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum(camTop()...),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterAWSAccounts)),
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -91,12 +94,15 @@ func toolCAMGcpAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page")),
+			mcp.WithString("top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum(camTop()...),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.CAMListGCPProjectsFilterDescription)),
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -153,12 +159,15 @@ func toolCAMAlibabaAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTo
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
-			mcp.WithNumber("top", mcp.Description("The number of records to display per page")),
+			mcp.WithString("top",
+				mcp.Description(tooldescriptions.DefaultTop),
+				mcp.Enum(camTop()...),
+			),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterAlibabaAccounts)),
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.Params.Arguments)
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -203,5 +212,16 @@ func toolCAMAlibabaAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool
 			resp, err := client.CAMGetAlibabaAccountDetails(accountId)
 			return handleStatusResponse(resp, err, http.StatusOK, "failed to get gcp project details")
 		},
+	}
+}
+
+func camTop() []string {
+	return []string{
+		"25",
+		"50",
+		"100",
+		"500",
+		"1000",
+		"5000",
 	}
 }
