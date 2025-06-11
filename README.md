@@ -24,24 +24,12 @@ This allows users to harness the power of Large Language Models (LLM) to interpr
 
 1. You must have a Trend Vision One account and API key.
 2. You must have credits allocated for the services you wish to interact with.
-3. Have [Go](https://go.dev/doc/install) installed.
-
-### Installation
-
-```bash
-go install github.com/trendmicro/vision-one-mcp-server/cmd/v1-mcp-server@latest
-```
-
-### Manual Installation Steps
-
-1. Clone the repository.
-2. Compile the binary `go build -o ./bin/v1-mcp-server ./cmd/v1-mcp-server/main.go`.
-3. Move the binary onto your `$PATH`.
-4. Run the binary.
+3. Have [Docker](https://www.docker.com/) installed.
+4. Have the latest version of [Visual Studio Code](https://code.visualstudio.com/) installed.
 
 ### Use With VSCode + GitHub Copilot
 
-Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vision-one-mcp&inputs=%5B%7B%22id%22%3A%22trend-vision-one-api-key%22%2C%22type%22%3A%22promptString%22%2C%22description%22%3A%22Trend%20Vision%20One%20API%20Key%22%2C%22password%22%3Atrue%7D%5D&config=%7B%22command%22%3A%22v1-mcp-server%22%2C%22args%22%3A%5B%22-region%22%2C%20%22au%22%2C%20%22-readonly%3Dtrue%22%5D%2C%22env%22%3A%7B%22TREND_VISION_ONE_API_KEY%22%3A%22%24%7Binput%3Atrend-vision-one-api-key%7D%22%7D%7D) to install the VSCode configuration or add the configuration below to your `settings.json`.
+Click [this link](vscode:mcp/install?%7B%22mcp%22%3A%7B%22inputs%22%3A%5B%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22trend-vision-one-api-key%22%2C%22description%22%3A%22Trend%20Vision%20One%20API%20Key%22%2C%22password%22%3Atrue%7D%2C%7B%22type%22%3A%22promptString%22%2C%22id%22%3A%22trend-vision-one-region%22%2C%22description%22%3A%22Trend%20Vision%20One%20Region%22%7D%5D%2C%22servers%22%3A%7B%22trend-vision-one-mcp%22%3A%7B%22command%22%3A%22docker%22%2C%22args%22%3A%5B%22run%22%2C%22-i%22%2C%22--rm%22%2C%22-e%22%2C%22TREND_VISION_ONE_API_KEY%22%2C%22ghcr.io%2Ftrendmicro%2Fvision-one-mcp-server%22%2C%22-region%22%2C%22%24%7Binput%3Atrend-vision-one-region%7D%22%2C%22-readonly%3Dtrue%22%5D%2C%22env%22%3A%7B%22TREND_VISION_ONE_API_KEY%22%3A%22%24%7Binput%3Atrend-vision-one-api-key%7D%22%7D%7D%7D%7D%7D) to install the VSCode configuration or add the configuration below to your `settings.json`.
 
 ```json
 {
@@ -53,13 +41,24 @@ Click [this link](https://insiders.vscode.dev/redirect/mcp/install?name=trend-vi
                 "description": "Trend Vision One API Key",
                 "password": true
             },
+            {
+                "type": "promptString",
+                "id": "trend-vision-one-region",
+                "description": "Trend Vision One Region"
+            }
         ],
         "servers": {
             "trend-vision-one-mcp": {
-                "command": "v1-mcp-server",
+                "command": "docker",
                 "args": [
+                    "run",
+                    "-i",
+                    "--rm",
+                    "-e",
+                    "TREND_VISION_ONE_API_KEY",
+                    "ghcr.io/trendmicro/vision-one-mcp-server",
                     "-region",
-                    "au",
+                    "${input:trend-vision-one-region}",
                     "-readonly=true"
                 ],
                 "env": {
