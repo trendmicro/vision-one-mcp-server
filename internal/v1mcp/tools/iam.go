@@ -94,13 +94,13 @@ func toolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 				ReadOnlyHint: toPtr(false),
 			}),
 			mcp.WithArray("apiKeyIds",
+				mcp.Description("Array of API Key Ids to delete"),
 				mcp.Required(),
 				mcp.Items(
 					map[string]any{
 						"type": "string",
 					},
 				),
-				mcp.Description("Array of API Key Ids to delete"),
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {

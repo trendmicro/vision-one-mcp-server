@@ -27,6 +27,7 @@ func toolEndpointSecurityEndpointsList(client *v1client.V1ApiClient) mcpserver.S
 			mcp.WithReadOnlyHintAnnotation(true),
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEndpoints)),
 			mcp.WithString("orderBy",
+				mcp.Description("The field by which the results are sorted"),
 				mcp.Enum(
 					withOrdering(
 						asc_desc,
@@ -36,7 +37,6 @@ func toolEndpointSecurityEndpointsList(client *v1client.V1ApiClient) mcpserver.S
 						"edrSensorLastConnectedDateTime",
 					)...,
 				),
-				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
@@ -97,6 +97,7 @@ func toolEndpointSecurityTaskList(client *v1client.V1ApiClient) mcpserver.Server
 
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEndpointTasks)),
 			mcp.WithString("orderBy",
+				mcp.Description("The field by which the results are sorted"),
 				mcp.Enum(
 					withOrdering(
 						asc_desc,
@@ -104,7 +105,6 @@ func toolEndpointSecurityTaskList(client *v1client.V1ApiClient) mcpserver.Server
 						"lastActionDateTime",
 					)...,
 				),
-				mcp.Description("The field by which the results are sorted"),
 			),
 			mcp.WithString("skipToken",
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
