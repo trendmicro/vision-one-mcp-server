@@ -111,3 +111,27 @@ func (c *V1ApiClient) CreditsListCREMCompromiseIndicators(filter string, queryPa
 		queryParams,
 	)
 }
+
+// CreditsGetAllocation gets current credit allocation across all services
+func (c *V1ApiClient) CreditsGetAllocation() (*http.Response, error) {
+	return c.genericGet("v3.0/credits/allocation")
+}
+
+// CreditsGetBalance gets remaining credit balance and usage statistics
+func (c *V1ApiClient) CreditsGetBalance() (*http.Response, error) {
+	return c.genericGet("v3.0/credits/balance")
+}
+
+// CreditsGetUsageStatistics gets detailed credit usage statistics by service
+func (c *V1ApiClient) CreditsGetUsageStatistics(filter string, queryParams QueryParameters) (*http.Response, error) {
+	return c.searchAndFilter(
+		"v3.0/credits/usage/statistics",
+		filter,
+		queryParams,
+	)
+}
+
+// CreditsGetServiceLimits gets credit limits and thresholds for all services
+func (c *V1ApiClient) CreditsGetServiceLimits() (*http.Response, error) {
+	return c.genericGet("v3.0/credits/limits")
+}

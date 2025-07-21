@@ -189,6 +189,9 @@ Alternatively, copy the following into your `settings.json`.
 | `credits_workbench_alerts_analysis` | Analyze workbench alert investigation activity for credits | `read` |
 | `credits_search_statistics_analysis` | Analyze search activity and sensor statistics for credit usage | `read` |
 | `credits_comprehensive_analysis` | Run comprehensive credit usage analysis across all Vision One modules | `read` |
+| `credits_optimization_analysis` | Analyze credit allocation vs usage to identify optimization opportunities and cost savings | `read` |
+| `credits_limit_monitoring` | Monitor credit usage approaching limits and provide proactive optimization recommendations | `read` |
+| `credits_allocation_analysis` | Analyze current credit allocation efficiency and suggest reallocation strategies | `read` |
 
 ## Architecture
 
