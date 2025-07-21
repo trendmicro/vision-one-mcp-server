@@ -178,6 +178,18 @@ Alternatively, copy the following into your `settings.json`.
 | `endpoint_security_tasks_list` | Displays the tasks of your endpoints in a paginated list | `read` |
 | `endpoint_security_version_control_policies_list` | Displays your Endpoint Version Control policies | `read` |
 
+### Credit Usage Analysis
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `credits_endpoint_security_analysis` | Analyze endpoint security credit usage including Pro licenses and security features | `read` |
+| `credits_datalake_pipelines_analysis` | Analyze active data lake pipelines consuming credits | `read` |
+| `credits_oat_detections_analysis` | Analyze Observed Attack Techniques (OAT) detections for credit usage | `read` |
+| `credits_sandbox_usage_analysis` | Analyze sandbox submission usage for credit consumption | `read` |
+| `credits_workbench_alerts_analysis` | Analyze workbench alert investigation activity for credits | `read` |
+| `credits_search_statistics_analysis` | Analyze search activity and sensor statistics for credit usage | `read` |
+| `credits_comprehensive_analysis` | Run comprehensive credit usage analysis across all Vision One modules | `read` |
+
 ## Architecture
 
 ![high-level architecture](./doc/images/trend-vision-one-mcp.png)
