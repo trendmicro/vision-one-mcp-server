@@ -67,42 +67,42 @@ func toolCREMAttackSurfaceDevicesList(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.Params.Arguments)
+			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.Params.Arguments)
+			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstSeenStartDateTime, err := optionalTimeValue("firstSeenStartDateTime", request.Params.Arguments)
+			firstSeenStartDateTime, err := optionalTimeValue("firstSeenStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstSeenEndDateTime, err := optionalTimeValue("firstSeenEndDateTime", request.Params.Arguments)
+			firstSeenEndDateTime, err := optionalTimeValue("firstSeenEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -150,22 +150,22 @@ func toolCREMAttackSurfaceDomainAccountsList(client *v1client.V1ApiClient) mcpse
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -203,22 +203,22 @@ func toolCREMAttackSurfaceGlobalFQDNsList(client *v1client.V1ApiClient) mcpserve
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -256,22 +256,22 @@ func toolCREMAttackSurfacePublicIPsList(client *v1client.V1ApiClient) mcpserver.
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -321,42 +321,42 @@ func toolCREMAttackSurfaceCloudAssetsList(client *v1client.V1ApiClient) mcpserve
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.Params.Arguments)
+			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.Params.Arguments)
+			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstSeenStartDateTime, err := optionalTimeValue("firstSeenStartDateTime", request.Params.Arguments)
+			firstSeenStartDateTime, err := optionalTimeValue("firstSeenStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstSeenEndDateTime, err := optionalTimeValue("firstSeenEndDateTime", request.Params.Arguments)
+			firstSeenEndDateTime, err := optionalTimeValue("firstSeenEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -402,22 +402,22 @@ func toolCREMAttackSurfaceHighRiskUsersList(client *v1client.V1ApiClient) mcpser
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -457,17 +457,17 @@ func toolCREMAttackSurfaceServiceAccountsList(client *v1client.V1ApiClient) mcps
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -494,7 +494,7 @@ func toolCREMAttackSurfaceCloudAssetProfileGet(client *v1client.V1ApiClient) mcp
 			mcp.WithString("cloudAssetId", mcp.Description("The ID of the cloud asset to retrieve.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			cloudAssetId, err := requiredValue[string]("cloudAssetId", request.Params.Arguments)
+			cloudAssetId, err := requiredValue[string]("cloudAssetId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -530,27 +530,27 @@ func toolCREMAttackSurfaceCloudAssetRiskIndicatorsList(client *v1client.V1ApiCli
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			cloudAssetId, err := requiredValue[string]("cloudAssetId", request.Params.Arguments)
+			cloudAssetId, err := requiredValue[string]("cloudAssetId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -595,22 +595,22 @@ func toolCREMAttackSurfaceLocalAppsList(client *v1client.V1ApiClient) mcpserver.
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -641,7 +641,7 @@ func toolCREMAttackSurfaceLocalAppProfileGet(client *v1client.V1ApiClient) mcpse
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			appID, err := requiredValue[string]("appID", request.Params.Arguments)
+			appID, err := requiredValue[string]("appID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -677,27 +677,27 @@ func toolCREMAttackSurfaceLocalAppRiskIndicatorsList(client *v1client.V1ApiClien
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			appID, err := requiredValue[string]("appID", request.Params.Arguments)
+			appID, err := requiredValue[string]("appID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -739,27 +739,27 @@ func toolCREMAttackSurfaceLocalAppDevicesList(client *v1client.V1ApiClient) mcps
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			appID, err := requiredValue[string]("appID", request.Params.Arguments)
+			appID, err := requiredValue[string]("appID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -801,27 +801,27 @@ func toolCREMAttackSurfaceLocalAppExecutableFilesList(client *v1client.V1ApiClie
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			appID, err := requiredValue[string]("appID", request.Params.Arguments)
+			appID, err := requiredValue[string]("appID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -859,22 +859,22 @@ func toolCREMAttackSurfaceCustomTagsList(client *v1client.V1ApiClient) mcpserver
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

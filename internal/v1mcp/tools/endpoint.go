@@ -42,17 +42,17 @@ func toolEndpointSecurityEndpointsList(client *v1client.V1ApiClient) mcpserver.S
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -77,7 +77,7 @@ func toolEndpointSecurityEndpointGet(client *v1client.V1ApiClient) mcpserver.Ser
 			mcp.WithString("endpointID", mcp.Required()),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			endpointID, err := requiredValue[string]("endpointID", request.Params.Arguments)
+			endpointID, err := requiredValue[string]("endpointID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -118,27 +118,27 @@ func toolEndpointSecurityTaskList(client *v1client.V1ApiClient) mcpserver.Server
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			startDateTime, err := optionalTimeValue("startDateTime", request.Params.Arguments)
+			startDateTime, err := optionalTimeValue("startDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			endDateTime, err := optionalTimeValue("endDateTime", request.Params.Arguments)
+			endDateTime, err := optionalTimeValue("endDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -165,7 +165,7 @@ func toolEndpointSecurityTaskGet(client *v1client.V1ApiClient) mcpserver.ServerT
 			mcp.WithString("taskID", mcp.Required()),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			taskID, err := requiredValue[string]("taskID", request.Params.Arguments)
+			taskID, err := requiredValue[string]("taskID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -184,12 +184,12 @@ func toolEndpointSecurityVersionControlPoliciesList(client *v1client.V1ApiClient
 			mcp.WithReadOnlyHintAnnotation(true),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

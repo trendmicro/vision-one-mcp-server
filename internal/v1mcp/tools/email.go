@@ -34,12 +34,12 @@ func toolEmailSecurityAccountsList(client *v1client.V1ApiClient) mcpserver.Serve
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterEmailAccounts)),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalIntValue("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -69,7 +69,7 @@ func toolEmailSecurityDomainsList(client *v1client.V1ApiClient) mcpserver.Server
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalIntValue("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -98,7 +98,7 @@ func toolEmailSecurityServersList(client *v1client.V1ApiClient) mcpserver.Server
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalIntValue("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

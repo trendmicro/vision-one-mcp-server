@@ -35,17 +35,17 @@ func toolCAMAwsAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.Params.Arguments)
+			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -76,7 +76,7 @@ func toolCAMAwsAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithString("accountId", mcp.Required()),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", request.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -102,17 +102,17 @@ func toolCAMGcpAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.Params.Arguments)
+			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -140,7 +140,7 @@ func toolCAMGcpAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			mcp.WithString("accountId", mcp.Required()),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", request.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -167,17 +167,17 @@ func toolCAMAlibabaAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTo
 			mcp.WithString("nextBatchToken", mcp.Description("Token used to retrieve the next page of results")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.Params.Arguments)
+			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -204,7 +204,7 @@ func toolCAMAlibabaAccountGet(client *v1client.V1ApiClient) mcpserver.ServerTool
 			mcp.WithString("accountId", mcp.Required()),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", request.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

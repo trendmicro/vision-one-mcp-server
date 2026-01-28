@@ -51,37 +51,37 @@ func toolContainerSecurityImageVulnerabilitiesList(client *v1client.V1ApiClient)
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.Params.Arguments)
+			lastDetectedStartDateTime, err := optionalTimeValue("lastDetectedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.Params.Arguments)
+			lastDetectedEndDateTime, err := optionalTimeValue("lastDetectedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstDetectedStartDateTime, err := optionalTimeValue("firstDetectedStartDateTime", request.Params.Arguments)
+			firstDetectedStartDateTime, err := optionalTimeValue("firstDetectedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			firstDetectedEndDateTime, err := optionalTimeValue("firstDetectedEndDateTime", request.Params.Arguments)
+			firstDetectedEndDateTime, err := optionalTimeValue("firstDetectedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -117,12 +117,12 @@ func toolContainerSecurityK8ClustersList(client *v1client.V1ApiClient) mcpserver
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterK8s)),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -148,7 +148,7 @@ func toolContainerSecurityK8ClusterGet(client *v1client.V1ApiClient) mcpserver.S
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			clusterID, err := requiredValue[string]("clusterID", request.Params.Arguments)
+			clusterID, err := requiredValue[string]("clusterID", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -175,12 +175,12 @@ func toolContainerSecurityECSClustersList(client *v1client.V1ApiClient) mcpserve
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterECS)),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -210,12 +210,12 @@ func toolContainerSecurityK8ImagesList(client *v1client.V1ApiClient) mcpserver.S
 			mcp.WithString("filter", mcp.Description(tooldescriptions.FilterK8Images)),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

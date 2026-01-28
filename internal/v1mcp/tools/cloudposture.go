@@ -39,12 +39,12 @@ func toolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.Server
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalIntValue("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -85,27 +85,27 @@ func toolCloudPostureAccountChecksList(client *v1client.V1ApiClient) mcpserver.S
 			mcp.WithString("endDateTime", mcp.Description("The end of the data retrieval range")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalIntValue("top", request.Params.Arguments)
+			top, err := optionalIntValue("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			startDate, err := optionalTimeValue("startDateTime", request.Params.Arguments)
+			startDate, err := optionalTimeValue("startDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			endDate, err := optionalTimeValue("endDateTime", request.Params.Arguments)
+			endDate, err := optionalTimeValue("endDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -140,11 +140,11 @@ func toolCloudPostureTemplateScannerRun(client *v1client.V1ApiClient) mcpserver.
 			),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			templateType, err := requiredValue[string]("type", ctr.Params.Arguments)
+			templateType, err := requiredValue[string]("type", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
-			content, err := requiredValue[string]("content", ctr.Params.Arguments)
+			content, err := requiredValue[string]("content", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -168,7 +168,7 @@ func toolCloudPostureAccountScanSettingsGet(client *v1client.V1ApiClient) mcpser
 			),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", ctr.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -192,7 +192,7 @@ func toolCloudPostureAccountScan(client *v1client.V1ApiClient) mcpserver.ServerT
 			),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", ctr.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -221,17 +221,17 @@ func toolCloudPostureAccountScanSettingsUpdate(client *v1client.V1ApiClient) mcp
 			mcp.WithBoolean("enabled"),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", ctr.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			interval, err := optionalIntValue("interval", ctr.Params.Arguments)
+			interval, err := optionalIntValue("interval", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			enabled, err := optionalPointerValue[bool]("enabled", ctr.Params.Arguments)
+			enabled, err := optionalPointerValue[bool]("enabled", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
