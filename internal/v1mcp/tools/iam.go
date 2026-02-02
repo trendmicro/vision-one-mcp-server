@@ -53,22 +53,22 @@ func toolIamApiKeysList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			skipToken, err := optionalValue[string]("skipToken", request.Params.Arguments)
+			skipToken, err := optionalValue[string]("skipToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -105,7 +105,7 @@ func toolIamApiKeysDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			keysToDelete := []string{}
-			if keyIds, ok := request.Params.Arguments["apiKeyIds"].([]any); ok && len(keyIds) > 0 {
+			if keyIds, ok := request.GetArguments()["apiKeyIds"].([]any); ok && len(keyIds) > 0 {
 				for _, id := range keyIds {
 					keyId, ok := id.(string)
 					if !ok {
@@ -146,22 +146,22 @@ func toolIamAccountInvite(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			email, err := requiredValue[string]("email", request.Params.Arguments)
+			email, err := requiredValue[string]("email", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			role, err := requiredValue[string]("role", request.Params.Arguments)
+			role, err := requiredValue[string]("role", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			authType, err := requiredValue[string]("authType", request.Params.Arguments)
+			authType, err := requiredValue[string]("authType", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			description, err := optionalValue[string]("description", request.Params.Arguments)
+			description, err := optionalValue[string]("description", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -195,12 +195,12 @@ func toolIamAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -239,22 +239,22 @@ func toolIamAccountUpdate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", request.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			role, err := optionalValue[string]("role", request.Params.Arguments)
+			role, err := optionalValue[string]("role", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			status, err := optionalValue[string]("status", request.Params.Arguments)
+			status, err := optionalValue[string]("status", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			description, err := optionalValue[string]("description", request.Params.Arguments)
+			description, err := optionalValue[string]("description", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -285,7 +285,7 @@ func toolIamAccountDelete(client *v1client.V1ApiClient) mcpserver.ServerTool {
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			accountId, err := requiredValue[string]("accountId", request.Params.Arguments)
+			accountId, err := requiredValue[string]("accountId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

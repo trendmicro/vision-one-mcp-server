@@ -47,22 +47,22 @@ func toolWorkbenchAlertsList(client *v1client.V1ApiClient) mcpserver.ServerTool 
 			mcp.WithString("endDateTime", mcp.Description("The end of the data retrieval range")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			startDate, err := optionalTimeValue("startDateTime", request.Params.Arguments)
+			startDate, err := optionalTimeValue("startDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			endDate, err := optionalTimeValue("endDateTime", request.Params.Arguments)
+			endDate, err := optionalTimeValue("endDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -92,7 +92,7 @@ func toolWorkbenchAlertDetailGet(client *v1client.V1ApiClient) mcpserver.ServerT
 			),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			alertId, err := requiredValue[string]("alertId", request.Params.Arguments)
+			alertId, err := requiredValue[string]("alertId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -139,32 +139,32 @@ func TookWorkbenchAlertNotesList(client *v1client.V1ApiClient) mcpserver.ServerT
 			mcp.WithString("endDateTime", mcp.Description("The end of the data retrieval range")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			alertId, err := requiredValue[string]("alertId", request.Params.Arguments)
+			alertId, err := requiredValue[string]("alertId", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			orderBy, err := optionalValue[string]("orderBy", request.Params.Arguments)
+			orderBy, err := optionalValue[string]("orderBy", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			startDate, err := optionalTimeValue("startDateTime", request.Params.Arguments)
+			startDate, err := optionalTimeValue("startDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			endDate, err := optionalTimeValue("endDateTime", request.Params.Arguments)
+			endDate, err := optionalTimeValue("endDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -211,37 +211,37 @@ func toolObservedAttackTechniquesList(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The token use to paginate. Used to retrieve the next page of information.")),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-			top, err := optionalStrInt("top", request.Params.Arguments)
+			top, err := optionalStrInt("top", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			filter, err := optionalValue[string]("filter", request.Params.Arguments)
+			filter, err := optionalValue[string]("filter", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.Params.Arguments)
+			nextBatchToken, err := optionalValue[string]("nextBatchToken", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			detectedStartDate, err := optionalTimeValue("detectedStartDateTime", request.Params.Arguments)
+			detectedStartDate, err := optionalTimeValue("detectedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			detectedEndDate, err := optionalTimeValue("detectedEndDateTime", request.Params.Arguments)
+			detectedEndDate, err := optionalTimeValue("detectedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			ingestedStartDate, err := optionalTimeValue("ingestedStartDateTime", request.Params.Arguments)
+			ingestedStartDate, err := optionalTimeValue("ingestedStartDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			ingestedEndDate, err := optionalTimeValue("ingestedEndDateTime", request.Params.Arguments)
+			ingestedEndDate, err := optionalTimeValue("ingestedEndDateTime", request.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}

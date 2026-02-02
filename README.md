@@ -178,6 +178,12 @@ Alternatively, copy the following into your `settings.json`.
 | `endpoint_security_tasks_list` | Displays the tasks of your endpoints in a paginated list | `read` |
 | `endpoint_security_version_control_policies_list` | Displays your Endpoint Version Control policies | `read` |
 
+### AI Security
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `aisecurity_guardrails_apply` | Evaluates prompts against AI guard policies and returns the recommended action (Allow/Block) with reasons for any policy violations detected | `read` |
+
 ## Architecture
 
 ![high-level architecture](./doc/images/trend-vision-one-mcp.png)
