@@ -184,6 +184,26 @@ Alternatively, copy the following into your `settings.json`.
 | ---- | ----------- | ---- |
 | `aisecurity_guardrails_apply` | Evaluates prompts against AI guard policies and returns the recommended action (Allow/Block) with reasons for any policy violations detected | `read` |
 
+### Threat Intelligence
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `threatintel_suspicious_objects_list` | Retrieves information about domains, file SHA-1, file SHA-256, IP addresses, email addresses, or URLs in the Suspicious Object List | `read` |
+| `threatintel_suspicious_objects_add` | Adds information about domains, file SHA-1, file SHA-256, IP addresses, email addresses, or URLs to the Suspicious Object List | `write` |
+| `threatintel_suspicious_objects_delete` | Deletes information about domains, file SHA-1, file SHA-256, IP addresses, email addresses, or URLs from the Suspicious Object List | `write` |
+| `threatintel_exceptions_list` | Retrieves information about domains, file SHA-1, file SHA-256, IP addresses, sender addresses, or URLs in the Exception List | `read` |
+| `threatintel_exceptions_add` | Adds domains, file SHA-1, file SHA-256, IP addresses, sender addresses, or URLs to the Exception List | `write` |
+| `threatintel_exceptions_delete` | Deletes the specified objects from the Exception List | `write` |
+| `threatintel_intelligence_reports_list` | Retrieves a list of custom intelligence reports created from imported or retrieved data | `read` |
+| `threatintel_intelligence_report_get` | Downloads a custom intelligence report as a STIX Bundle | `read` |
+| `threatintel_intelligence_reports_delete` | Deletes the specified custom intelligence reports | `write` |
+| `threatintel_sweep_trigger` | Searches your environment for threat indicators specified in a custom intelligence report | `write` |
+| `threatintel_tasks_list` | Displays information about threat intelligence tasks and asynchronous jobs | `read` |
+| `threatintel_task_results_get` | Retrieves the results of a threat intelligence task | `read` |
+| `threatintel_feed_indicators_list` | Retrieves a list of IoCs from Trend Threat Intelligence Feed | `read` |
+| `threatintel_feeds_list` | Retrieves a list of intelligence reports from the Trend Threat Intelligence Feed with associated objects and relationships | `read` |
+| `threatintel_feed_filter_definition_get` | Retrieves supported filter keys and values for Trend Threat Intelligence Feed queries | `read` |
+
 ## Architecture
 
 ![high-level architecture](./doc/images/trend-vision-one-mcp.png)

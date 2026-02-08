@@ -60,6 +60,7 @@ func toolDomainResourceAction(client *v1client.V1ApiClient) mcpserver.ServerTool
 - Server validates annotations match toolset registration (panics on mismatch)
 - Add read tools to `ToolsetsReadOnly{Domain}`, write tools to `ToolsetsWrite{Domain}` in respective `tools/*.go` files
 - Register toolsets in `server.go`
+- **REQUIRED:** Update `README.md` Tools section with new tools (include tool name, description, and mode)
 
 ### API Paths
 Paths must NOT start with `/`. The client's `Parse` method handles URL joining:
@@ -102,6 +103,7 @@ Used by domains requiring custom headers (e.g., AI Security uses `TMV1-Applicati
 | Email | `v1client/email.go` | `tools/email.go` | `v3.0/email/` |
 | Container | `v1client/container.go` | `tools/container.go` | `v3.0/containerSecurity/` |
 | Endpoint | `v1client/endpoint.go` | `tools/endpoint.go` | `v3.0/endpointSecurity/` |
+| Threat Intel | `v1client/threatintel.go` | `tools/threatintel.go` | `v3.0/threatintel/` |
 
 **Note:** OAT (Observed Attack Techniques) has its own client file but tools are registered under the Workbench toolset.
 
