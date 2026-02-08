@@ -80,9 +80,42 @@ optionalTimeValue(property string, vals map[string]any) (time.Time, error)
 handleStatusResponse(r *http.Response, err error, expectedStatusCode int, msg string) (*mcp.CallToolResult, error)
 ```
 
+### Generic Client Functions (v1client/v1client.go)
+Always prefer using these generic functions over manual request construction:
+```go
+// For GET requests with filter header and query parameters (most common)
+c.searchAndFilter(path string, filter string, queryParams any) (*http.Response, error)
+
+// For simple GET requests without filters or query parameters
+c.genericGet(path string) (*http.Response, error)
+```
+
+Example usage:
+```go
+// Correct - use searchAndFilter for list/search endpoints
+func (c *V1ApiClient) SomeListEndpoint(filter string, queryParams QueryParameters) (*http.Response, error) {
+    return c.searchAndFilter("v3.0/domain/resources", filter, queryParams)
+}
+
+// Correct - use genericGet for simple GET by ID
+func (c *V1ApiClient) SomeGetEndpoint(id string) (*http.Response, error) {
+    return c.genericGet(fmt.Sprintf("v3.0/domain/resources/%s", id))
+}
+
+// Wrong - don't manually construct requests when generic functions work
+func (c *V1ApiClient) SomeListEndpoint(filter string, queryParams QueryParameters) (*http.Response, error) {
+    p, err := query.Values(queryParams)  // Unnecessary boilerplate
+    // ... more manual construction
+}
+```
+
 ### Request Options (v1client/v1client.go)
+For cases where generic functions don't apply (custom headers, POST/PUT/DELETE):
 ```go
 withHeader(name, value string) requestOptionFunc  // Add custom headers to requests
+withFilter(filter string) requestOptionFunc       // Add TMV1-Filter header
+withUrlParameters(params url.Values) requestOptionFunc  // Add query parameters
+withContentTypeJSON() requestOptionFunc           // Add JSON content-type header
 ```
 Used by domains requiring custom headers (e.g., AI Security uses `TMV1-Application-Name`, `TMV1-Request-Type`, `Prefer`).
 
