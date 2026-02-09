@@ -1,6 +1,8 @@
 package v1client
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -175,6 +177,25 @@ func (c *V1ApiClient) genericGet(path string) (*http.Response, error) {
 		http.MethodGet,
 		path,
 		http.NoBody,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericJSONPost(path string, body any, options ...requestOptionFunc) (*http.Response, error) {
+	b, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	opts := append([]requestOptionFunc{withContentTypeJSON()}, options...)
+	r, err := c.newRequest(
+		http.MethodPost,
+		path,
+		bytes.NewReader(b),
+		opts...,
 	)
 	if err != nil {
 		return nil, err

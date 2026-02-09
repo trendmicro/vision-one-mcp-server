@@ -1,8 +1,6 @@
 package v1client
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -74,39 +72,11 @@ func (c *V1ApiClient) ThreatIntelListSuspiciousObjects(filter string, queryParam
 }
 
 func (c *V1ApiClient) ThreatIntelAddSuspiciousObjects(objects []SuspiciousObject) (*http.Response, error) {
-	b, err := json.Marshal(&objects)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/suspiciousObjects",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/suspiciousObjects", objects)
 }
 
 func (c *V1ApiClient) ThreatIntelDeleteSuspiciousObjects(objects []SuspiciousObjectDelete) (*http.Response, error) {
-	b, err := json.Marshal(&objects)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/suspiciousObjects/delete",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/suspiciousObjects/delete", objects)
 }
 
 func (c *V1ApiClient) ThreatIntelListExceptions(filter string, queryParams ThreatIntelQueryParameters) (*http.Response, error) {
@@ -114,39 +84,11 @@ func (c *V1ApiClient) ThreatIntelListExceptions(filter string, queryParams Threa
 }
 
 func (c *V1ApiClient) ThreatIntelAddExceptions(objects []SuspiciousObjectException) (*http.Response, error) {
-	b, err := json.Marshal(&objects)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/suspiciousObjectExceptions",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/suspiciousObjectExceptions", objects)
 }
 
 func (c *V1ApiClient) ThreatIntelDeleteExceptions(objects []SuspiciousObjectDelete) (*http.Response, error) {
-	b, err := json.Marshal(&objects)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/suspiciousObjectExceptions/delete",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/suspiciousObjectExceptions/delete", objects)
 }
 
 func (c *V1ApiClient) ThreatIntelListIntelligenceReports(queryParams ThreatIntelQueryParameters) (*http.Response, error) {
@@ -162,39 +104,11 @@ func (c *V1ApiClient) ThreatIntelDeleteIntelligenceReports(reportIds []string) (
 	for _, id := range reportIds {
 		deleteBody = append(deleteBody, IntelligenceReportDelete{ID: id})
 	}
-	b, err := json.Marshal(&deleteBody)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/intelligenceReports/delete",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/intelligenceReports/delete", deleteBody)
 }
 
 func (c *V1ApiClient) ThreatIntelTriggerSweep(sweeps []IntelligenceReportSweep) (*http.Response, error) {
-	b, err := json.Marshal(&sweeps)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
-		"v3.0/threatintel/intelligenceReports/sweep",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
-	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
+	return c.genericJSONPost("v3.0/threatintel/intelligenceReports/sweep", sweeps)
 }
 
 func (c *V1ApiClient) ThreatIntelListTasks(queryParams ThreatIntelQueryParameters) (*http.Response, error) {
