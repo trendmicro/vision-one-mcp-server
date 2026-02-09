@@ -46,8 +46,6 @@ func (c *V1ApiClient) CloudPostureUpdateAccountScanSettings(
 	return c.genericJSONPatch(fmt.Sprintf("beta/cloudPosture/accounts/%s/scanSetting", accountId), body)
 }
 
-// Custom Rules (Beta) API methods
-
 func (c *V1ApiClient) CloudPostureListCustomRules(queryParams QueryParameters) (*http.Response, error) {
 	return c.searchAndFilter("beta/cloudPosture/customRules", "", queryParams)
 }
