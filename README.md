@@ -88,7 +88,7 @@ Alternatively, copy the following into your `settings.json`.
 
 ## Tools
 
-### Cloud Posture
+### Cloud Posture (Beta)
 
 | Tool | Description | Mode |
 | ---- | ----------- | ---- |
@@ -98,11 +98,6 @@ Alternatively, copy the following into your `settings.json`.
 | `cloud_posture_account_scan_settings_get` | Get the scan settings for an account. | `read` |
 | `cloud_posture_account_scan_settings_update` | Update an account's scan settings. | `write` |
 | `cloud_posture_template_scanner_run` | Scan an infrastructure as code template using the cloud posture template scanner. | `read` |
-
-### Cloud Posture Custom Rules (Beta)
-
-| Tool | Description | Mode |
-| ---- | ----------- | ---- |
 | `cloud_posture_custom_rules_list` | (Beta) Displays the custom rules of your company in a paginated list. | `read` |
 | `cloud_posture_custom_rule_get` | (Beta) Returns the configuration of the specified custom rule. | `read` |
 | `cloud_posture_custom_rule_create` | (Beta) Creates a custom rule for your company. Requires Master Administrator role. | `write` |
