@@ -140,10 +140,6 @@ func withContentTypeJSON() requestOptionFunc {
 	}
 }
 
-func contentTypeJSON(r *http.Request) {
-	r.Header.Add("content-type", "application/json")
-}
-
 // withHeader adds a custom header to the request.
 func withHeader(name, value string) requestOptionFunc {
 	return func(r *http.Request) {
@@ -155,16 +151,20 @@ func withHeader(name, value string) requestOptionFunc {
 }
 
 func (c *V1ApiClient) searchAndFilter(path, filter string, queryParams any) (*http.Response, error) {
+	return c.searchAndFilterWithOptions(path, filter, queryParams)
+}
+
+func (c *V1ApiClient) searchAndFilterWithOptions(path, filter string, queryParams any, options ...requestOptionFunc) (*http.Response, error) {
 	p, err := query.Values(queryParams)
 	if err != nil {
 		return nil, err
 	}
+	opts := append([]requestOptionFunc{withFilter(filter), withUrlParameters(p)}, options...)
 	r, err := c.newRequest(
 		http.MethodGet,
 		path,
 		http.NoBody,
-		withFilter(filter),
-		withUrlParameters(p),
+		opts...,
 	)
 	if err != nil {
 		return nil, err
