@@ -46,10 +46,12 @@ func NewMcpServer(cfg ServerConfig) (*mcpserver.MCPServer, error) {
 	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyContainer)
 	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyEndpoint)
 	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyAISecurity)
+	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyThreatIntel)
 
 	if !cfg.ReadOnly {
 		addWriteToolset(s, client, tools.ToolsetsWriteCloudPosture)
 		addWriteToolset(s, client, tools.ToolsetsWriteIAM)
+		addWriteToolset(s, client, tools.ToolsetsWriteThreatIntel)
 	}
 
 	return s, nil

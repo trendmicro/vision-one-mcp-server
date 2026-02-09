@@ -1245,3 +1245,125 @@ or 	Operator 'or'
 not 	Operator 'not'
 () 	Symbols for grouping operands
 `
+
+var FilterSuspiciousObjects = `
+string <= 4000 characters
+Example: type eq 'url' AND riskLevel eq 'high'
+
+Filter for retrieving a subset of the Suspicious Object List.
+
+Supported fields:
+Field 	Description 	Possible values
+type 	The type of a suspicious object 	url, domain, senderMailAddress, ip, fileSha1, fileSha256
+url 	Suspicious URL 	Any value
+domain 	Suspicious domain name 	Any value
+ip 	Suspicious IP address 	Any value
+senderMailAddress 	Suspicious email address 	Any value
+fileSha1 	SHA1 hash associated to a suspicious file 	Any value
+fileSha256 	SHA256 hash associated to a suspicious file 	Any value
+scanAction 	Action that connected products apply after detecting a suspicious object 	block, log
+riskLevel 	Risk level of a suspicious object 	high, medium, low
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands with their correct operator
+`
+
+var FilterSuspiciousObjectExceptions = `
+string <= 4000 characters
+Example: type eq 'url' AND url eq '*.example.com'
+
+Filter for retrieving a subset of the Exception List.
+
+Supported fields:
+Field 	Description 	Possible values
+type 	The type of a suspicious object 	url, domain, senderMailAddress, ip, fileSha1, fileSha256
+url 	Exception URL 	Any value
+domain 	Exception domain name 	Any value
+ip 	Exception IP address 	Any value
+senderMailAddress 	Exception email address 	Any value
+fileSha1 	SHA1 hash identifying a file exception 	Any value
+fileSha256 	SHA256 hash identifying a file exception 	Any value
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands with their correct operator
+`
+
+var FilterIntelligenceReports = `
+string <= 4000 characters
+Example: id eq 'report--2c1091ba-a7d2-46b2-bf97-4137916c30cb' AND name eq 'Report1'
+
+Filter for retrieving a subset of the custom intelligence reports list.
+
+Supported fields:
+Field 	Description
+id 	Unique alphanumeric string that identifies a custom intelligence report
+name 	Title of a custom intelligence report (needs to be included with single quotation marks)
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands with their correct operator
+`
+
+var FilterThreatIntelTasks = `
+string <= 4000 characters
+Example: sweepType eq 'manual' AND isHit eq true
+
+Filter for retrieving a subset of the sweeping task list.
+
+Supported fields:
+Field 	Description 	Possible values
+id 	Unique alphanumeric string that identifies a sweeping task 	Any value
+sweepType 	Type of sweeping task 	schedule, manual, stixShifter
+isHit 	States whether indicators were matched during a sweeping task 	true, false
+status 	Status of a sweeping task 	notstarted, running, succeeded, failed
+
+Supported operators:
+Operator 	Description
+eq 	Operator 'equal to'
+and 	Operator 'and'
+or 	Operator 'or'
+not 	Operator 'not'
+() 	Symbols for grouping operands with their correct operator
+`
+
+var FilterThreatIntelFeeds = `
+string <= 4000 characters
+Example: (location eq 'Brazil' or location eq 'No specified locations') and (industry in ('Finance', 'Health', 'No specified industries'))
+
+Defines the criteria for retrieving specific subsets of intelligence objects from the Trend Threat Intelligence Feed by applying contextual relationship-based filtering.
+
+Supported fields:
+Field 	Description
+location 	Filters intelligence reports based on the associated location (e.g., 'Canada', 'United States of America', 'No specified locations')
+industry 	Filters intelligence reports based on the associated industry sector (e.g., 'Finance', 'Technology', 'Government', 'No specified industries')
+
+Supported operators:
+Operator 	Description
+eq 	Equals
+and 	Logical AND
+or 	Logical OR
+not 	Logical NOT
+in 	Matches any value in a list
+() 	Grouping expressions for precedence and lists of values
+
+Example queries:
+- Single condition: location eq 'Canada'
+- OR condition: location eq 'United States of America' or location eq 'Mexico'
+- AND condition: location eq 'France' and industry eq 'Technology'
+- NOT condition: not (location eq 'Germany')
+- IN operator: industry in ('Financial Services', 'Insurance', 'Healthcare')
+`
