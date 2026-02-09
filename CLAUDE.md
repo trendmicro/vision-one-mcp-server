@@ -122,6 +122,9 @@ Used by domains requiring custom headers (e.g., AI Security uses `TMV1-Applicati
 ### Tool Naming Convention
 `{domain}_{resource}_{action}` - e.g., `iam_api_keys_list`, `workbench_alert_detail_get`
 
+### Comments
+Only add comments when something truly needs explanation. Comments should explain "why", not "what". If the code is clear from function names, variable names, and structure, no comment is needed.
+
 ## Domain Organization
 
 | Domain | Client File | Tools File | API Prefix |
