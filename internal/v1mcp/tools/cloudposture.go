@@ -26,13 +26,13 @@ var ToolsetsWriteCloudPosture = []func(*v1client.V1ApiClient) mcpserver.ServerTo
 var ToolsetsReadOnlyCloudPostureBeta = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
 	toolCloudPostureCustomRulesList,
 	toolCloudPostureCustomRuleGet,
+	toolCloudPostureCustomRuleTest,
 }
 
 var ToolsetsWriteCloudPostureBeta = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
 	toolCloudPostureCustomRuleCreate,
 	toolCloudPostureCustomRuleUpdate,
 	toolCloudPostureCustomRuleDelete,
-	toolCloudPostureCustomRuleTest,
 }
 
 func toolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
@@ -662,7 +662,7 @@ func toolCloudPostureCustomRuleTest(client *v1client.V1ApiClient) mcpserver.Serv
 			"cloud_posture_custom_rule_test",
 			mcp.WithDescription("(Beta) Tests the provided custom rule configuration against the specified Cloud Risk Management account or mock resource data. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
-				ReadOnlyHint: toPtr(false),
+				ReadOnlyHint: toPtr(true),
 			}),
 			mcp.WithString("accountId",
 				mcp.Description("The Cloud Risk Management account ID to test against. Either accountId or resource must be provided."),
