@@ -202,3 +202,45 @@ func (c *V1ApiClient) genericJSONPost(path string, body any, options ...requestO
 	}
 	return c.client.Do(r)
 }
+
+func (c *V1ApiClient) genericPost(path string) (*http.Response, error) {
+	r, err := c.newRequest(
+		http.MethodPost,
+		path,
+		http.NoBody,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericJSONPatch(path string, body any) (*http.Response, error) {
+	b, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	r, err := c.newRequest(
+		http.MethodPatch,
+		path,
+		bytes.NewReader(b),
+		withContentTypeJSON(),
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericDelete(path string) (*http.Response, error) {
+	r, err := c.newRequest(
+		http.MethodDelete,
+		path,
+		http.NoBody,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
