@@ -184,6 +184,14 @@ Alternatively, copy the following into your `settings.json`.
 | ---- | ----------- | ---- |
 | `aisecurity_guardrails_apply` | Evaluates prompts against AI guard policies and returns the recommended action (Allow/Block) with reasons for any policy violations detected | `read` |
 
+### Cloud Risk Management
+
+| Tool | Description | Mode |
+| ---- | ----------- | ---- |
+| `cloud_risk_management_accounts_list` | Displays the cloud accounts you can access in a paginated list | `read` |
+| `cloud_risk_management_account_scan_rules_get` | Displays the settings for all rules of the specified account in a paginated list | `read` |
+| `cloud_risk_management_services_list` | Retrieves a list of cloud services and their associated rules supported by Cloud Risk Management | `read` |
+
 ### Threat Intelligence
 
 | Tool | Description | Mode |

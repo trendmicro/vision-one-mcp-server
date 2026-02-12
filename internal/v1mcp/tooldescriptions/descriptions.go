@@ -340,6 +340,70 @@ not 	Operator 'not'
 Note: Include this parameter in every request that generates paginated output.
 `
 
+var FilterCloudRiskManagementAccounts = `
+string <= 1783 characters
+Example: provider eq 'aws' or provider eq 'azure'
+
+Filter for retrieving a subset of accounts.
+
+Supported field values:
+
+| Field                   | Description                                 | Possible values                                                     |
+| ----------------------- | ------------------------------------------- | ------------------------------------------------------------------- |
+| provider                | The cloud service provider                  | aws, azure, gcp, alibabaCloud, oci                                  |
+| awsAccountId            | The cloudId of the AWS provider             | Example: "123456789023"                                             |
+| azureSubscriptionId     | The cloudId of the Azure provider           | Example: "be98adad-6385-4323-bf42-c61234215c7c"                     |
+| gcpProjectId            | The cloudId of the GCP provider             | Example: "af66c906-4652-4824-a4f2-f703238af335-my-gcp-project"      |
+| ociCompartmentId        | The cloudId of the OCI provider             | Example: "ocid1.compartment.oc1..aaaaaaaaxxxxxxx"                   |
+| alibabaAccountId        | The cloudId of the Alibaba Cloud provider   | Example: "1234567890123456"                                         |
+
+Supported operators:
+
+| Operator | Description         |
+| -------- | ------------------- |
+| eq       | Operator 'equal to' |
+| or       | Operator 'or'       |
+`
+
+var FilterCloudRiskManagementScanRules = `
+string <= 1783 characters
+Example: isCustomized eq 'true'
+
+Filter for retrieving a subset of rule settings.
+
+Supported field values:
+
+| Field        | Description                                 | Possible values       |
+| ------------ | ------------------------------------------- | --------------------- |
+| isCustomized | Indicates if the rule uses default settings | true, false           |
+
+Supported operators:
+
+| Operator | Description         |
+| -------- | ------------------- |
+| eq       | Operator 'equal to' |
+`
+
+var FilterCloudRiskManagementServices = `
+string <= 1783 characters
+Example: provider eq 'aws'
+
+Filter for retrieving a subset of services.
+
+Supported field values:
+
+| Field    | Description                | Possible values                              |
+| -------- | -------------------------- | -------------------------------------------- |
+| provider | The cloud service provider | aws, azure, gcp, alibabaCloud, oci           |
+
+Supported operators:
+
+| Operator | Description         |
+| -------- | ------------------- |
+| eq       | Operator 'equal to' |
+| or       | Operator 'or'       |
+`
+
 var FilterCloudPostureChecks = `
 string <= 1783 characters
 Examples:
