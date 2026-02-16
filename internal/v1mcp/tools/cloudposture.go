@@ -99,7 +99,7 @@ var customRuleAttributeSchema = map[string]any{
 var customRuleEventRuleSchema = map[string]any{
 	"type": "object",
 	"properties": map[string]any{
-		"conditions":  customRuleConditionsSchema,
+		"conditions": customRuleConditionsSchema,
 		"description": map[string]any{
 			"type":        "string",
 			"description": "Message shown when rule condition triggers (resource is non-compliant)",
