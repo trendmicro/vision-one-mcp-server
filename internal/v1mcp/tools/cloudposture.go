@@ -22,7 +22,6 @@ var ToolsetsWriteCloudPosture = []func(*v1client.V1ApiClient) mcpserver.ServerTo
 	toolCloudPostureAccountScanSettingsUpdate,
 }
 
-// Cloud Posture Custom Rules (Beta) toolsets
 var ToolsetsReadOnlyCloudPostureBeta = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
 	toolCloudPostureCustomRulesList,
 	toolCloudPostureCustomRuleGet,
@@ -33,6 +32,80 @@ var ToolsetsWriteCloudPostureBeta = []func(*v1client.V1ApiClient) mcpserver.Serv
 	toolCloudPostureCustomRuleCreate,
 	toolCloudPostureCustomRuleUpdate,
 	toolCloudPostureCustomRuleDelete,
+}
+
+// Schema definitions for custom rules (json-rules-engine based)
+var customRuleConditionItemSchema = map[string]any{
+	"type": "object",
+	"properties": map[string]any{
+		"fact": map[string]any{
+			"type":        "string",
+			"description": "The attribute name defined in the attributes array",
+		},
+		"operator": map[string]any{
+			"type":        "string",
+			"description": "Comparison operator",
+			"enum":        []string{"equal", "notEqual", "lessThan", "lessThanInclusive", "greaterThan", "greaterThanInclusive", "in", "notIn", "contains", "doesNotContain", "dateComparison"},
+		},
+		"value": map[string]any{
+			"description": "Value to compare against. For dateComparison, use object: {days: number, operator: 'within'|'before'|'after'}",
+		},
+	},
+	"required": []string{"fact", "operator", "value"},
+}
+
+var customRuleConditionsSchema = map[string]any{
+	"type":        "object",
+	"description": "Boolean logic container. Use exactly one of: 'any', 'all', or 'not' at root level",
+	"properties": map[string]any{
+		"any": map[string]any{
+			"type":        "array",
+			"description": "Array of conditions where at least one must be true",
+			"items":       customRuleConditionItemSchema,
+		},
+		"all": map[string]any{
+			"type":        "array",
+			"description": "Array of conditions where all must be true",
+			"items":       customRuleConditionItemSchema,
+		},
+		"not": map[string]any{
+			"type":        "object",
+			"description": "Single condition to negate",
+			"properties":  customRuleConditionItemSchema["properties"],
+			"required":    customRuleConditionItemSchema["required"],
+		},
+	},
+}
+
+var customRuleAttributeSchema = map[string]any{
+	"type": "object",
+	"properties": map[string]any{
+		"name": map[string]any{
+			"type":        "string",
+			"description": "The attribute name, referenced as 'fact' in eventRules conditions",
+		},
+		"path": map[string]any{
+			"type":        "string",
+			"description": "JSONPath to extract value from resource data. Examples: 'data.AccessKeyMetadata[0].CreateDate' for single value, 'data.sourceRanges[*]' for array elements, 'data.allowed[*].ports[*]' for nested arrays",
+		},
+		"required": map[string]any{
+			"type":        "boolean",
+			"description": "If true, rule evaluation fails when attribute path doesn't exist",
+		},
+	},
+	"required": []string{"name", "path"},
+}
+
+var customRuleEventRuleSchema = map[string]any{
+	"type": "object",
+	"properties": map[string]any{
+		"conditions":  customRuleConditionsSchema,
+		"description": map[string]any{
+			"type":        "string",
+			"description": "Message shown when rule condition triggers (resource is non-compliant)",
+		},
+	},
+	"required": []string{"conditions", "description"},
 }
 
 func toolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
@@ -333,7 +406,7 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_create",
-			mcp.WithDescription("(Beta) Creates a custom rule for your company. Enabled custom rules are immediately available to all your cloud accounts. Requires Master Administrator role."),
+			mcp.WithDescription("(Beta) Creates a custom rule for your organization. Enabled custom rules are immediately available to all your cloud accounts. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -342,6 +415,7 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The name of the custom rule"),
 			),
 			mcp.WithString("description",
+				mcp.Required(),
 				mcp.Description("The description of the custom rule"),
 			),
 			mcp.WithArray("categories",
@@ -357,7 +431,7 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 			mcp.WithString("provider",
 				mcp.Required(),
 				mcp.Description("The cloud provider for the custom rule"),
-				mcp.Enum("aws", "azure", "gcp", "alibaba"),
+				mcp.Enum("aws", "azure", "gcp", "oci", "alibabaCloud"),
 			),
 			mcp.WithString("resolutionReferenceLink",
 				mcp.Description("A URL to the resolution reference documentation"),
@@ -379,13 +453,13 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 			),
 			mcp.WithArray("attributes",
 				mcp.Required(),
-				mcp.Description("The attributes to extract from the resource for rule evaluation. Each attribute should have name, path, and optionally required fields."),
-				mcp.Items(map[string]any{"type": "object"}),
+				mcp.Description("The attributes to extract from the resource for rule evaluation using JSONPath."),
+				mcp.Items(customRuleAttributeSchema),
 			),
 			mcp.WithArray("eventRules",
 				mcp.Required(),
-				mcp.Description("The event rules defining conditions for the custom rule. Each rule should have conditions and description fields."),
-				mcp.Items(map[string]any{"type": "object"}),
+				mcp.Description("Rules using json-rules-engine. Rule passes (resource compliant) when conditions evaluate to true."),
+				mcp.Items(customRuleEventRuleSchema),
 			),
 			mcp.WithString("slug",
 				mcp.Description("The slug of the custom rule used to form the rule ID. If not provided, a random string will be used."),
@@ -397,7 +471,7 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 				return mcp.NewToolResultError(err.Error()), nil
 			}
 
-			description, err := optionalValue[string]("description", ctr.GetArguments())
+			description, err := requiredValue[string]("description", ctr.GetArguments())
 			if err != nil {
 				return mcp.NewToolResultError(err.Error()), nil
 			}
@@ -513,7 +587,7 @@ func toolCloudPostureCustomRuleUpdate(client *v1client.V1ApiClient) mcpserver.Se
 			),
 			mcp.WithString("provider",
 				mcp.Description("The cloud provider for the custom rule"),
-				mcp.Enum("aws", "azure", "gcp", "alibaba"),
+				mcp.Enum("aws", "azure", "gcp", "oci", "alibabaCloud"),
 			),
 			mcp.WithString("resolutionReferenceLink",
 				mcp.Description("A URL to the resolution reference documentation"),
@@ -531,12 +605,12 @@ func toolCloudPostureCustomRuleUpdate(client *v1client.V1ApiClient) mcpserver.Se
 				mcp.Description("The resource type for the custom rule"),
 			),
 			mcp.WithArray("attributes",
-				mcp.Description("The attributes to extract from the resource for rule evaluation"),
-				mcp.Items(map[string]any{"type": "object"}),
+				mcp.Description("The attributes to extract from the resource for rule evaluation using JSONPath."),
+				mcp.Items(customRuleAttributeSchema),
 			),
 			mcp.WithArray("eventRules",
-				mcp.Description("The event rules defining conditions for the custom rule"),
-				mcp.Items(map[string]any{"type": "object"}),
+				mcp.Description("Rules using json-rules-engine. Rule passes (resource compliant) when conditions evaluate to true."),
+				mcp.Items(customRuleEventRuleSchema),
 			),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
@@ -669,10 +743,67 @@ func toolCloudPostureCustomRuleTest(client *v1client.V1ApiClient) mcpserver.Serv
 			),
 			mcp.WithObject("configuration",
 				mcp.Required(),
-				mcp.Description("The custom rule configuration to test. Should include name, description, categories, riskLevel, provider, service, resourceType, attributes, and eventRules."),
+				mcp.Description("The custom rule configuration to test."),
+				mcp.Properties(map[string]any{
+					"name": map[string]any{
+						"type":        "string",
+						"description": "The name of the custom rule",
+					},
+					"description": map[string]any{
+						"type":        "string",
+						"description": "The description of the custom rule",
+					},
+					"categories": map[string]any{
+						"type":        "array",
+						"items":       map[string]any{"type": "string"},
+						"description": "Categories: security, cost-optimisation, reliability, performance-efficiency, operational-excellence, sustainability",
+					},
+					"riskLevel": map[string]any{
+						"type":        "string",
+						"enum":        []string{"LOW", "MEDIUM", "HIGH", "VERY_HIGH", "EXTREME"},
+						"description": "The risk level of the custom rule",
+					},
+					"provider": map[string]any{
+						"type":        "string",
+						"enum":        []string{"aws", "azure", "gcp", "oci", "alibabaCloud"},
+						"description": "The cloud provider",
+					},
+					"enabled": map[string]any{
+						"type":        "boolean",
+						"description": "Whether the custom rule is enabled",
+					},
+					"service": map[string]any{
+						"type":        "string",
+						"description": "The cloud service (e.g., IAM, S3, EC2)",
+					},
+					"resourceType": map[string]any{
+						"type":        "string",
+						"description": "The resource type (e.g., iam-user, s3-bucket)",
+					},
+					"remediationNote": map[string]any{
+						"type":        "string",
+						"description": "Notes on how to remediate the issue",
+					},
+					"attributes": map[string]any{
+						"type":        "array",
+						"description": "Attributes to extract using JSONPath",
+						"items":       customRuleAttributeSchema,
+					},
+					"eventRules": map[string]any{
+						"type":        "array",
+						"description": "Rules using json-rules-engine",
+						"items":       customRuleEventRuleSchema,
+					},
+				}),
 			),
 			mcp.WithObject("resource",
 				mcp.Description("Mock resource data to test the rule against. Either accountId or resource must be provided."),
+				mcp.Properties(map[string]any{
+					"metadata": map[string]any{
+						"type":        "object",
+						"description": "Resource metadata containing the data fields matching the resourceType schema. Place all resource data fields directly inside metadata (e.g., for iam-user: {\"metadata\": {\"AccessKeyMetadata\": [...]}})",
+					},
+				}),
 			),
 		),
 		Handler: func(ctx context.Context, ctr mcp.CallToolRequest) (*mcp.CallToolResult, error) {
