@@ -27,6 +27,12 @@ List the changes made in this PR:
 
 Steps to manually test this PR:
 
+1. `git checkout <branch-name>`
+2. `make mcpserver`
+3. Move the `v1-mcp-server` binary onto `$PATH`
+4. Configure the server with your AI tooling (differs depending on tool used)
+5. _Describe specific test steps here..._
+
 ---
 
 ## Screenshots / Demos (if applicable)

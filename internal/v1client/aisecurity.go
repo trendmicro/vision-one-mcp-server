@@ -1,8 +1,6 @@
 package v1client
 
 import (
-	"bytes"
-	"encoding/json"
 	"net/http"
 )
 
@@ -66,23 +64,11 @@ type AISecurityApplyGuardrailsOptions struct {
 
 // AISecurityApplyGuardrails evaluates prompts against AI guard policies.
 func (c *V1ApiClient) AISecurityApplyGuardrails(input AISecurityApplyGuardrailsInput, opts AISecurityApplyGuardrailsOptions) (*http.Response, error) {
-	b, err := json.Marshal(&input)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := c.newRequest(
-		http.MethodPost,
+	return c.genericJSONPost(
 		"v3.0/aiSecurity/applyGuardrails",
-		bytes.NewReader(b),
-		withContentTypeJSON(),
+		input,
 		withHeader("TMV1-Application-Name", opts.ApplicationName),
 		withHeader("TMV1-Request-Type", opts.RequestType),
 		withHeader("Prefer", opts.Prefer),
 	)
-	if err != nil {
-		return nil, err
-	}
-
-	return c.client.Do(r)
 }

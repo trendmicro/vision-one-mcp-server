@@ -18,12 +18,39 @@ func TestWithOrdering(t *testing.T) {
 
 func TestRequiredValue(t *testing.T) {
 	vals := map[string]any{
-		"top": 1,
+		"top":       1,
+		"enabled":   false,
+		"count":     0,
+		"name":      "test",
+		"emptyName": "",
 	}
 
 	t.Run("should error on missing param", func(t *testing.T) {
 		_, err := requiredValue[string]("m", vals)
 		require.EqualError(t, err, "missing required parameter: m")
+	})
+
+	t.Run("should error on empty string", func(t *testing.T) {
+		_, err := requiredValue[string]("emptyName", vals)
+		require.EqualError(t, err, "missing required parameter: emptyName")
+	})
+
+	t.Run("should return string value", func(t *testing.T) {
+		v, err := requiredValue[string]("name", vals)
+		require.NoError(t, err)
+		require.Equal(t, "test", v)
+	})
+
+	t.Run("should return false for boolean", func(t *testing.T) {
+		v, err := requiredValue[bool]("enabled", vals)
+		require.NoError(t, err)
+		require.False(t, v)
+	})
+
+	t.Run("should return zero for int", func(t *testing.T) {
+		v, err := requiredValue[int]("count", vals)
+		require.NoError(t, err)
+		require.Zero(t, v)
 	})
 }
 

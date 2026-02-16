@@ -31,15 +31,17 @@ func requiredValue[T comparable](property string, vals map[string]any) (T, error
 		return defaultValue, fmt.Errorf("missing required parameter: %s", property)
 	}
 
-	if _, ok := vals[property].(T); !ok {
+	val, ok := vals[property].(T)
+	if !ok {
 		return defaultValue, fmt.Errorf("%s is not of type %T", property, defaultValue)
 	}
 
-	if vals[property] == defaultValue {
+	// Only check for empty strings, allow zero-values for other types (bool false, int 0)
+	if any(val) == any("") {
 		return defaultValue, fmt.Errorf("missing required parameter: %s", property)
 	}
 
-	return vals[property].(T), nil
+	return val, nil
 }
 
 func optionalIntValue(property string, vals map[string]any) (int, error) {
