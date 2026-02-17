@@ -112,7 +112,7 @@ func toolCloudPostureAccountsList(client *v1client.V1ApiClient) mcpserver.Server
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_accounts_list",
-			mcp.WithDescription("List CSPM Accounts"),
+			mcp.WithDescription("List CSPM Accounts."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -155,7 +155,7 @@ func toolCloudPostureAccountChecksList(client *v1client.V1ApiClient) mcpserver.S
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_checks_list",
-			mcp.WithDescription("List the checks of an account"),
+			mcp.WithDescription("List the checks of an account."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -213,7 +213,7 @@ func toolCloudPostureTemplateScannerRun(client *v1client.V1ApiClient) mcpserver.
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_template_scanner_run",
-			mcp.WithDescription("Scan an infrastructure as code template using the cloud posture template scanner"),
+			mcp.WithDescription("Scan an infrastructure as code template using the cloud posture template scanner."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -245,7 +245,7 @@ func toolCloudPostureAccountScanSettingsGet(client *v1client.V1ApiClient) mcpser
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan_settings_get",
-			mcp.WithDescription("Get the scan settings for an account"),
+			mcp.WithDescription("Get the scan settings for an account."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -269,7 +269,7 @@ func toolCloudPostureAccountScan(client *v1client.V1ApiClient) mcpserver.ServerT
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan",
-			mcp.WithDescription("Start scanning cloud posture account"),
+			mcp.WithDescription("Start scanning cloud posture account."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -293,7 +293,7 @@ func toolCloudPostureAccountScanSettingsUpdate(client *v1client.V1ApiClient) mcp
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_account_scan_settings_update",
-			mcp.WithDescription("Update an account's scan settings"),
+			mcp.WithDescription("Update an account's scan settings."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -338,7 +338,7 @@ func toolCloudPostureCustomRulesList(client *v1client.V1ApiClient) mcpserver.Ser
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rules_list",
-			mcp.WithDescription("(Beta) Displays the custom rules of your company in a paginated list"),
+			mcp.WithDescription("(Beta) Displays the custom rules of your company in a paginated list."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -381,7 +381,7 @@ func toolCloudPostureCustomRuleGet(client *v1client.V1ApiClient) mcpserver.Serve
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_get",
-			mcp.WithDescription("(Beta) Returns the configuration of the specified custom rule"),
+			mcp.WithDescription("(Beta) Returns the configuration of the specified custom rule."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
