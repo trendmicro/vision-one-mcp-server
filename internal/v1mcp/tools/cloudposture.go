@@ -22,7 +22,6 @@ var ToolsetsWriteCloudPosture = []func(*v1client.V1ApiClient) mcpserver.ServerTo
 	toolCloudPostureAccountScanSettingsUpdate,
 }
 
-// Cloud Posture Custom Rules (Beta) toolsets
 var ToolsetsReadOnlyCloudPostureBeta = []func(*v1client.V1ApiClient) mcpserver.ServerTool{
 	toolCloudPostureCustomRulesList,
 	toolCloudPostureCustomRuleGet,
@@ -259,13 +258,11 @@ func toolCloudPostureAccountScanSettingsUpdate(client *v1client.V1ApiClient) mcp
 	}
 }
 
-// Cloud Posture Custom Rules (Beta) tools
-
 func toolCloudPostureCustomRulesList(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rules_list",
-			mcp.WithDescription("(Beta) Displays the custom rules of your company in a paginated list."),
+			mcp.WithDescription("Displays the custom rules of your company in a paginated list."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -308,7 +305,7 @@ func toolCloudPostureCustomRuleGet(client *v1client.V1ApiClient) mcpserver.Serve
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_get",
-			mcp.WithDescription("(Beta) Returns the configuration of the specified custom rule."),
+			mcp.WithDescription("Returns the configuration of the specified custom rule."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
@@ -333,7 +330,7 @@ func toolCloudPostureCustomRuleCreate(client *v1client.V1ApiClient) mcpserver.Se
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_create",
-			mcp.WithDescription("(Beta) Creates a custom rule for your organization. Enabled custom rules are immediately available to all your cloud accounts. Requires Master Administrator role."),
+			mcp.WithDescription("Creates a custom rule for your organization. Enabled custom rules are immediately available to all your cloud accounts. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -493,7 +490,7 @@ func toolCloudPostureCustomRuleUpdate(client *v1client.V1ApiClient) mcpserver.Se
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_update",
-			mcp.WithDescription("(Beta) Updates the specified custom rule. Requires Master Administrator role."),
+			mcp.WithDescription("Updates the specified custom rule. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -642,7 +639,7 @@ func toolCloudPostureCustomRuleDelete(client *v1client.V1ApiClient) mcpserver.Se
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_delete",
-			mcp.WithDescription("(Beta) Deletes the specified custom rule permanently. Requires Master Administrator role."),
+			mcp.WithDescription("Deletes the specified custom rule permanently. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
@@ -667,7 +664,7 @@ func toolCloudPostureCustomRuleTest(client *v1client.V1ApiClient) mcpserver.Serv
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
 			"cloud_posture_custom_rule_test",
-			mcp.WithDescription("(Beta) Tests the provided custom rule configuration against the specified Cloud Risk Management account or mock resource data. Requires Master Administrator role."),
+			mcp.WithDescription("Tests the provided custom rule configuration against the specified Cloud Risk Management account or mock resource data. Requires Master Administrator role."),
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(true),
 			}),
