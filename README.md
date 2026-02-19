@@ -88,16 +88,22 @@ Alternatively, copy the following into your `settings.json`.
 
 ## Tools
 
-### Cloud Posture
+### Cloud Posture (Beta)
 
 | Tool | Description | Mode |
 | ---- | ----------- | ---- |
-| `cloud_posture_accounts_list` | List CSPM Accounts. | `read` |
-| `cloud_posture_account_checks_list` | List the checks of an account. | `read` |
-| `cloud_posture_account_scan` | Start scanning Cloud Posture account. | `write` |
-| `cloud_posture_account_scan_settings_get` | Get the scan settings for an account. | `read` |
-| `cloud_posture_account_scan_settings_update` | Update an account's scan settings. | `write` |
-| `cloud_posture_template_scanner_run` | Scan an infrastructure as code template using the cloud posture template scanner. | `read` |
+| `cloud_posture_accounts_list` | (Beta) List CSPM Accounts. | `read` |
+| `cloud_posture_account_checks_list` | (Beta) List the checks of an account. | `read` |
+| `cloud_posture_account_scan` | (Beta) Start scanning Cloud Posture account. | `write` |
+| `cloud_posture_account_scan_settings_get` | (Beta) Get the scan settings for an account. | `read` |
+| `cloud_posture_account_scan_settings_update` | (Beta) Update an account's scan settings. | `write` |
+| `cloud_posture_template_scanner_run` | (Beta) Scan an infrastructure as code template using the cloud posture template scanner. | `read` |
+| `cloud_posture_custom_rules_list` | (Beta) Displays the custom rules of your company in a paginated list. | `read` |
+| `cloud_posture_custom_rule_get` | (Beta) Returns the configuration of the specified custom rule. | `read` |
+| `cloud_posture_custom_rule_create` | (Beta) Creates a custom rule for your company. Requires Master Administrator role. | `write` |
+| `cloud_posture_custom_rule_update` | (Beta) Updates the specified custom rule. Requires Master Administrator role. | `write` |
+| `cloud_posture_custom_rule_delete` | (Beta) Deletes the specified custom rule permanently. Requires Master Administrator role. | `write` |
+| `cloud_posture_custom_rule_test` | (Beta) Tests the provided custom rule configuration against an account or mock resource data. Requires Master Administrator role. | `read` |
 
 ### Identity and Access Management (IAM)
 

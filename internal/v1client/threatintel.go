@@ -3,8 +3,6 @@ package v1client
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/google/go-querystring/query"
 )
 
 type ThreatIntelQueryParameters struct {
@@ -124,21 +122,12 @@ func (c *V1ApiClient) ThreatIntelListFeedIndicators(queryParams ThreatIntelFeedP
 }
 
 func (c *V1ApiClient) ThreatIntelListFeeds(contextualFilter string, queryParams ThreatIntelFeedParameters) (*http.Response, error) {
-	p, err := query.Values(queryParams)
-	if err != nil {
-		return nil, err
-	}
-	r, err := c.newRequest(
-		http.MethodGet,
+	return c.searchAndFilterWithOptions(
 		"v3.0/threatintel/feeds",
-		http.NoBody,
+		"",
+		queryParams,
 		withHeader("TMV1-Contextual-Filter", contextualFilter),
-		withUrlParameters(p),
 	)
-	if err != nil {
-		return nil, err
-	}
-	return c.client.Do(r)
 }
 
 func (c *V1ApiClient) ThreatIntelGetFeedFilterDefinition() (*http.Response, error) {

@@ -140,10 +140,6 @@ func withContentTypeJSON() requestOptionFunc {
 	}
 }
 
-func contentTypeJSON(r *http.Request) {
-	r.Header.Add("content-type", "application/json")
-}
-
 // withHeader adds a custom header to the request.
 func withHeader(name, value string) requestOptionFunc {
 	return func(r *http.Request) {
@@ -155,16 +151,20 @@ func withHeader(name, value string) requestOptionFunc {
 }
 
 func (c *V1ApiClient) searchAndFilter(path, filter string, queryParams any) (*http.Response, error) {
+	return c.searchAndFilterWithOptions(path, filter, queryParams)
+}
+
+func (c *V1ApiClient) searchAndFilterWithOptions(path, filter string, queryParams any, options ...requestOptionFunc) (*http.Response, error) {
 	p, err := query.Values(queryParams)
 	if err != nil {
 		return nil, err
 	}
+	opts := append([]requestOptionFunc{withFilter(filter), withUrlParameters(p)}, options...)
 	r, err := c.newRequest(
 		http.MethodGet,
 		path,
 		http.NoBody,
-		withFilter(filter),
-		withUrlParameters(p),
+		opts...,
 	)
 	if err != nil {
 		return nil, err
@@ -196,6 +196,48 @@ func (c *V1ApiClient) genericJSONPost(path string, body any, options ...requestO
 		path,
 		bytes.NewReader(b),
 		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericPost(path string) (*http.Response, error) {
+	r, err := c.newRequest(
+		http.MethodPost,
+		path,
+		http.NoBody,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericJSONPatch(path string, body any) (*http.Response, error) {
+	b, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+
+	r, err := c.newRequest(
+		http.MethodPatch,
+		path,
+		bytes.NewReader(b),
+		withContentTypeJSON(),
+	)
+	if err != nil {
+		return nil, err
+	}
+	return c.client.Do(r)
+}
+
+func (c *V1ApiClient) genericDelete(path string) (*http.Response, error) {
+	r, err := c.newRequest(
+		http.MethodDelete,
+		path,
+		http.NoBody,
 	)
 	if err != nil {
 		return nil, err
