@@ -1,3 +1,4 @@
 .claude/
+.claude-sessions/
 bin/
 .DS_Store

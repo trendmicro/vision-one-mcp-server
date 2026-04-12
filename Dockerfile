@@ -21,5 +21,13 @@ FROM gcr.io/distroless/base-debian12
 WORKDIR /server
 # Copy the binary from the build stage
 COPY --from=build /bin/v1-mcp-server .
+
+# Transport configuration: stdio (default) or http
+ENV TRANSPORT=stdio
+# Address to listen on when using http transport (AgentCore expects port 8000)
+ENV ADDR=:8000
+# Expose port for http transport
+EXPOSE 8000
+
 # Command to run the server
 ENTRYPOINT ["./v1-mcp-server"]

@@ -88,6 +88,41 @@ func RunMcpStdioServer(cfg ServerConfig) error {
 	return nil
 }
 
+func RunMcpHttpServer(cfg ServerConfig, addr string) error {
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	s, err := NewMcpServer(cfg)
+	if err != nil {
+		return fmt.Errorf("error creating mcp server: %w", err)
+	}
+
+	// Use StreamableHTTPServer for AgentCore compatibility (POST /mcp endpoint)
+	httpServer := mcpserver.NewStreamableHTTPServer(s,
+		mcpserver.WithEndpointPath("/mcp"),
+		mcpserver.WithStateLess(true),
+	)
+
+	serverError := make(chan error)
+	go func() {
+		serverError <- httpServer.Start(addr)
+	}()
+
+	fmt.Fprintf(os.Stderr, "server listening on %s...\n", addr)
+
+	select {
+	case <-ctx.Done():
+		fmt.Fprintf(os.Stderr, "shutting down server...\n")
+		if err := httpServer.Shutdown(context.Background()); err != nil {
+			return fmt.Errorf("error shutting down server: %w", err)
+		}
+	case e := <-serverError:
+		return fmt.Errorf("server encountered error: %w", e)
+	}
+
+	return nil
+}
+
 func addReadOnlyToolset(
 	s *mcpserver.MCPServer,
 	client *v1client.V1ApiClient,

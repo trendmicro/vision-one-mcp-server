@@ -13,10 +13,10 @@ This allows users to harness the power of Large Language Models (LLM) to interpr
 
 ## Security
 
-1. Your Trend Vision One API keys should be configured with minimial permissions.
+1. Your Trend Vision One API keys should be configured with minimal permissions.
 2. By default the MCP server runs in read-only mode. Be careful when running the server with `readonly=false` as it may have irreversible consequences.
 3. Data retrieved using the MCP server is processed by the LLM configured in your AI tooling. It is your responsibility to ensure that this LLM is approved by your company for processing sensitive data.
-4. This MCP server is only intended to be used with local integrations and command-line tools via the Standard Input/Output transport. You should never expose this tool to the network.
+4. When using HTTP transport, ensure the server is deployed behind appropriate authentication and network controls. The HTTP transport is intended for managed cloud deployments (e.g., AWS AgentCore) with proper security measures in place.
 
 ## Getting Started
 
@@ -80,11 +80,58 @@ Alternatively, copy the following into your `settings.json`.
 
 ### Server Options
 
-| Option | Description |
-| ------ | ----------- |
-| `-readonly` | Specify whether or not the server should run in readonly mode `readonly=true`, `readonly=false`. Default `true`. |
-| `-region` | Specify the Trend Vision One region. Regions are: `au`, `jp`, `eu`, `sg`, `in`, `us` or `mea`. |
-| `-host` | Set the Trend Vision One endpoint you want to use. Useful for interacting with internal environments. |
+| Option | Environment Variable | Description |
+| ------ | -------------------- | ----------- |
+| `-readonly` | | Specify whether or not the server should run in readonly mode `readonly=true`, `readonly=false`. Default `true`. |
+| `-region` | | Specify the Trend Vision One region. Regions are: `au`, `jp`, `eu`, `sg`, `in`, `us` or `mea`. |
+| `-host` | | Set the Trend Vision One endpoint you want to use. Useful for interacting with internal environments. |
+| `-transport` | `TRANSPORT` | Transport type: `stdio` or `http`. Default `stdio`. |
+| `-addr` | `ADDR` | Address to listen on when using HTTP transport. Default `:8000`. |
+
+### Transport Modes
+
+The MCP server supports two transport modes:
+
+#### Standard I/O (stdio) - Default
+
+Used for local integrations with Claude Desktop, VSCode, and other MCP clients that communicate via stdin/stdout.
+
+```bash
+./v1-mcp-server -region us
+```
+
+#### HTTP (Streamable HTTP)
+
+Used for remote deployments such as AWS Bedrock AgentCore. The server exposes a `/mcp` endpoint for MCP communication using the streamable HTTP transport.
+
+```bash
+./v1-mcp-server -region us -transport http -addr :8000
+```
+
+Or using environment variables (recommended for containerized deployments):
+
+```bash
+TRANSPORT=http ADDR=:8000 ./v1-mcp-server -region us
+```
+
+**Docker with HTTP transport:**
+
+```bash
+docker run -p 8000:8000 \
+  -e TREND_VISION_ONE_API_KEY=your-api-key \
+  -e TRANSPORT=http \
+  ghcr.io/trendmicro/vision-one-mcp-server \
+  -region us
+```
+
+**Testing locally:**
+
+```bash
+# List available tools
+curl -X POST http://localhost:8000/mcp \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc": "2.0", "id": 1, "method": "tools/list"}'
+```
 
 ## Tools
 

@@ -24,6 +24,8 @@ func run() error {
 	v1Region := flag.String("region", "", "set the region of your vision one account.")
 	showVersion := flag.Bool("version", false, "print version information")
 	host := flag.String("host", "", "set the Trend Vision One endpoint you want to use. Only useful for interacting with internal environments.")
+	transport := flag.String("transport", getEnvOrDefault("TRANSPORT", "stdio"), "transport type: stdio or http")
+	addr := flag.String("addr", getEnvOrDefault("ADDR", ":8000"), "address to listen on when using http transport")
 
 	flag.Parse()
 
@@ -47,6 +49,10 @@ func run() error {
 		}
 	}
 
+	if *transport != "stdio" && *transport != "http" {
+		return fmt.Errorf("invalid transport %q, must be stdio or http", *transport)
+	}
+
 	version := getVersion()
 
 	serverCfg := v1mcp.ServerConfig{
@@ -55,6 +61,10 @@ func run() error {
 		Region:   *v1Region,
 		Version:  version,
 		Host:     *host,
+	}
+
+	if *transport == "http" {
+		return v1mcp.RunMcpHttpServer(serverCfg, *addr)
 	}
 
 	return v1mcp.RunMcpStdioServer(serverCfg)
@@ -99,4 +109,11 @@ func getVersion() string {
 
 func printVersion() {
 	fmt.Fprintf(os.Stderr, "%s\n", getVersion())
+}
+
+func getEnvOrDefault(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
 }
