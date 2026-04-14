@@ -21,9 +21,9 @@ func main() {
 
 func run() error {
 	readOnly := flag.Bool("readonly", true, "set readonly false to allow the MCP server to perform write operations.")
-	v1Region := flag.String("region", "", "set the region of your vision one account.")
+	v1Region := flag.String("region", getEnvOrDefault("TREND_VISION_ONE_REGION", ""), "set the region of your vision one account.")
 	showVersion := flag.Bool("version", false, "print version information")
-	host := flag.String("host", "", "set the Trend Vision One endpoint you want to use. Only useful for interacting with internal environments.")
+	host := flag.String("host", getEnvOrDefault("TREND_VISION_ONE_HOST", ""), "set the Trend Vision One endpoint you want to use. Only useful for interacting with internal environments.")
 	transport := flag.String("transport", getEnvOrDefault("TRANSPORT", "stdio"), "transport type: stdio or http")
 	addr := flag.String("addr", getEnvOrDefault("ADDR", ":8000"), "address to listen on when using http transport")
 
