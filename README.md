@@ -130,6 +130,7 @@ Alternatively, copy the following into your `settings.json`.
 | `oat_data_pipeline_update` | Modify data pipeline settings. | `write` |
 | `oat_data_pipeline_packages_list` | Get Observed Attack Techniques event packages. | `read` |
 | `oat_data_pipeline_package_get` | Get Observed Attack Techniques package. | `read` |
+| `workbench_alert_notes_list` | Get alert notes. | `read` |
 | `workbench_alert_notes_create` | Add alert note. | `write` |
 | `workbench_alert_notes_delete` | Delete alert notes. | `write` |
 | `workbench_alert_note_get` | Get alert note. | `read` |
