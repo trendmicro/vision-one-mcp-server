@@ -54,3 +54,67 @@ func (c *V1ApiClient) IAMUpdateAccount(accountId string, input IAMUpdateAccountI
 func (c *V1ApiClient) IAMDeleteAccount(accountId string) (*http.Response, error) {
 	return c.genericDelete(fmt.Sprintf("v3.0/iam/accounts/%s", accountId))
 }
+
+func (c *V1ApiClient) IamAccountGet(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, pathf("v3.0/iam/accounts/%s", id), p)
+}
+
+func (c *V1ApiClient) IamApiKeysCreate(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPost, "v3.0/iam/apiKeys", p)
+}
+
+func (c *V1ApiClient) IamApiKeyGet(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, pathf("v3.0/iam/apiKeys/%s", id), p)
+}
+
+func (c *V1ApiClient) IamApiKeyUpdate(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPatch, pathf("v3.0/iam/apiKeys/%s", id), p)
+}
+
+func (c *V1ApiClient) IamIdentityProvidersList(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, "v3.0/iam/identityProviders", p)
+}
+
+func (c *V1ApiClient) IamIdentityProvidersCreate(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPost, "v3.0/iam/identityProviders", p)
+}
+
+func (c *V1ApiClient) IamIdentityProviderDelete(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodDelete, pathf("v3.0/iam/identityProviders/%s", id), p)
+}
+
+func (c *V1ApiClient) IamIdentityProviderGet(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, pathf("v3.0/iam/identityProviders/%s", id), p)
+}
+
+func (c *V1ApiClient) IamIdentityProviderUpdate(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPost, pathf("v3.0/iam/identityProviders/%s/update", id), p)
+}
+
+func (c *V1ApiClient) IamRolesList(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, "v3.0/iam/roles", p)
+}
+
+func (c *V1ApiClient) IamRolesCreate(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPost, "v3.0/iam/roles", p)
+}
+
+func (c *V1ApiClient) IamRolesPermissionKeysList(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, "v3.0/iam/roles/permissionKeys", p)
+}
+
+func (c *V1ApiClient) IamRoleDelete(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodDelete, pathf("v3.0/iam/roles/%s", id), p)
+}
+
+func (c *V1ApiClient) IamRoleGet(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, pathf("v3.0/iam/roles/%s", id), p)
+}
+
+func (c *V1ApiClient) IamRoleUpdate(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPatch, pathf("v3.0/iam/roles/%s", id), p)
+}
+
+func (c *V1ApiClient) IamRolePermissionsList(id string, p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodGet, pathf("v3.0/iam/roles/%s/permissions", id), p)
+}

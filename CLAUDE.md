@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Trend Vision One MCP Server - A Go-based Model Context Protocol (MCP) server that bridges AI tooling (Claude, VSCode + GitHub Copilot) with Trend Vision One security platform APIs. Enables natural language interaction with security services like Workbench alerts, Cloud Posture, endpoint management, attack surface discovery, and AI security guardrails.
+Trend Vision One MCP Server - A Go-based Model Context Protocol (MCP) server that bridges AI tooling (Claude, VSCode + GitHub Copilot) with Trend Vision One security platform APIs. Enables natural language interaction with security services like Workbench alerts, Cloud Risk Management, endpoint management, attack surface discovery, and AI security guardrails.
 
 ## Build & Test Commands
 
@@ -59,8 +59,9 @@ func toolDomainResourceAction(client *v1client.V1ApiClient) mcpserver.ServerTool
 - Tools must be annotated with `ReadOnlyHint: toPtr(true/false)`
 - Server validates annotations match toolset registration (panics on mismatch)
 - Add read tools to `ToolsetsReadOnly{Domain}`, write tools to `ToolsetsWrite{Domain}` in respective `tools/*.go` files
-- Register toolsets in `server.go`
+- Register toolsets in `toolsets.go` (`toolsetDefs`); each has a name selectable with the `-toolsets` flag (comma list, `all` by default).
 - **REQUIRED:** Update `README.md` Tools section with new tools (include tool name, description, and mode)
+- Only expose generally available APIs. Do not add tools for beta or preview endpoints (paths starting with `beta/`)
 
 ### API Paths
 Paths must NOT start with `/`. The client's `Parse` method handles URL joining:
@@ -119,6 +120,27 @@ withContentTypeJSON() requestOptionFunc           // Add JSON content-type heade
 ```
 Used by domains requiring custom headers (e.g., AI Security uses `TMV1-Application-Name`, `TMV1-Request-Type`, `Prefer`).
 
+### Request Params Pattern (v1client/request.go, tools/request.go)
+Most endpoints, including every write endpoint, use `RequestParams` instead of typed query structs:
+```go
+// v1client: path arguments are typed, everything else travels in RequestParams
+func (c *V1ApiClient) SandboxTaskGet(id string, p RequestParams) (*http.Response, error) {
+    return c.do(http.MethodGet, pathf("v3.0/sandbox/tasks/%s", id), p)
+}
+
+// tools: requestSpec maps tool arguments to query parameters, headers and the request body
+params, err := buildRequestParams(args, requestSpec{
+    Query:   []paramDef{{Name: "top", Kind: kindString}},
+    Headers: []headerDef{{Arg: "filter", Header: "TMV1-Filter"}},
+})
+resp, err := client.SandboxTaskGet(id, params)
+return handleResponse(resp, err, "failed to get submission status")
+```
+- `pathf` URL-escapes every path argument. Read path arguments with `pathValue`.
+- `Body` is `bodyObject` (the `BodyFields` are sent as JSON), `bodyArray` (the `items` argument is sent as the JSON array) or `bodyMultipart` (`BodyFields` are form fields and `FileFields` hold the path of a local file to upload).
+- `handleResponse` treats every 2xx status as success (bulk endpoints return 207), returns `ETag`, `Operation-Location` and `Location` headers alongside the body, and returns binary responses as embedded resources.
+- Header arguments are named `filter` (`TMV1-Filter`), `query` (`TMV1-Query`), `ifMatch` (`If-Match`) and `accept` (`Accept`).
+
 ### Tool Naming Convention
 `{domain}_{resource}_{action}` - e.g., `iam_api_keys_list`, `workbench_alert_detail_get`
 
@@ -133,15 +155,28 @@ Only add comments when something truly needs explanation. Comments should explai
 | IAM | `v1client/iam.go` | `tools/iam.go` | `v3.0/iam/` |
 | Workbench | `v1client/workbench.go` | `tools/workbench.go` | `v3.0/workbench/` |
 | OAT | `v1client/oat.go` | `tools/workbench.go` | `v3.0/oat/` |
-| Cloud Posture | `v1client/cloudposture.go` | `tools/cloudposture.go` | `v3.0/asrm/` |
 | CREM | `v1client/crem.go` | `tools/crem.go` | `v3.0/asrm/` |
 | CAM | `v1client/cam.go` | `tools/cam.go` | `v3.0/cam/` |
 | Email | `v1client/email.go` | `tools/email.go` | `v3.0/email/` |
 | Container | `v1client/container.go` | `tools/container.go` | `v3.0/containerSecurity/` |
 | Endpoint | `v1client/endpoint.go` | `tools/endpoint.go` | `v3.0/endpointSecurity/` |
 | Threat Intel | `v1client/threatintel.go` | `tools/threatintel.go` | `v3.0/threatintel/` |
+| Audit Logs | `v1client/audit.go` | `tools/audit.go` | `v3.0/audit/` |
+| Business Information | `v1client/business.go` | `tools/business.go` | `v3.0/business/` |
+| Case Management | `v1client/casemanagement.go` | `tools/casemanagement.go` | `v3.0/caseManagement/` |
+| Data Pipelines (Datalake) | `v1client/datalake.go` | `tools/datalake.go` | `v3.0/datalake/` |
+| Detection Model Management | `v1client/dmm.go` | `tools/dmm.go` | `v3.0/dmm/` |
+| Endpoint Inventory (EIQS) | `v1client/eiqs.go` | `tools/eiqs.go` | `v3.0/eiqs/` |
+| File Security | `v1client/filesecurity.go` | `tools/filesecurity.go` | `v3.0/fileSecurity/` |
+| Health Check | `v1client/healthcheck.go` | `tools/healthcheck.go` | `v3.0/healthcheck/` |
+| Response Management | `v1client/response.go` | `tools/response.go` | `v3.0/response/` |
+| Sandbox Analysis | `v1client/sandbox.go` | `tools/sandbox.go` | `v3.0/sandbox/` |
+| Search | `v1client/search.go` | `tools/search.go` | `v3.0/search/` |
+| Security Awareness | `v1client/securityawareness.go` | `tools/securityawareness.go` | `v3.0/securityAwareness/` |
+| Security Playbooks | `v1client/securityplaybooks.go` | `tools/securityplaybooks.go` | `v3.0/securityPlaybooks/` |
+| Tag Management | `v1client/tagmanagement.go` | `tools/tagmanagement.go` | `v3.0/tagManagement/` |
 
-**Note:** OAT (Observed Attack Techniques) has its own client file but tools are registered under the Workbench toolset.
+**Note:** OAT (Observed Attack Techniques) has its own client file but tools are registered under the Workbench toolset. The CREM domain covers everything under `v3.0/asrm/`, including vulnerability and risk event endpoints.
 
 ## Contributing
 
