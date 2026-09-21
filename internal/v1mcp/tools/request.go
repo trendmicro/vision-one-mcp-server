@@ -130,6 +130,8 @@ func buildRequestParams(args map[string]any, spec requestSpec) (v1client.Request
 	}
 
 	switch spec.Body {
+	case bodyNone:
+		// no request body
 	case bodyObject:
 		body := map[string]any{}
 		for _, def := range spec.BodyFields {
