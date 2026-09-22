@@ -84,8 +84,39 @@ Alternatively, copy the following into your `settings.json`.
 | ------ | ----------- |
 | `-readonly` | Specify whether or not the server should run in readonly mode `readonly=true`, `readonly=false`. Default `true`. |
 | `-region` | Specify the Trend Vision One region. Regions are: `au`, `ca`, `eu`, `id`, `in`, `jp`, `mea`, `sg`, `uk`, `us` or `za`. |
-| `-toolsets` | Comma separated list of toolsets to enable, or `all`. Default `all`. Available toolsets: `ai`, `audit`, `awareness`, `business`, `cam`, `cases`, `cloudrisk`, `container`, `crem`, `datalake`, `dmm`, `eiqs`, `email`, `endpoint`, `filesecurity`, `healthcheck`, `iam`, `playbooks`, `response`, `sandbox`, `search`, `tags`, `threatintel`, `workbench` (includes OAT). Write tools of a selected toolset are still only registered when `-readonly=false`. |
+| `-toolsets` | Comma separated list of toolsets to enable, or `all`. Default `all`. See [Available Toolsets](#available-toolsets) below for the full list. Write tools of a selected toolset are still only registered when `-readonly=false`. |
 | `-host` | Set the Trend Vision One endpoint you want to use. Useful for interacting with internal environments. |
+
+#### Available Toolsets
+
+Each `-toolsets` value below corresponds to a domain in the [Tools](#tools) section. Example: `-toolsets crem,workbench,eiqs` enables only Cyber Risk & Exposure Management, Workbench (including OAT), and Endpoint Inventory.
+
+| Toolset | Domain |
+| ------- | ------ |
+| `ai` | AI Security |
+| `audit` | Audit Logs |
+| `awareness` | Security Awareness |
+| `business` | Business Information |
+| `cam` | Cloud Account Management |
+| `cases` | Case Management |
+| `cloudrisk` | Cloud Risk Management |
+| `container` | Container Security |
+| `crem` | Cyber Risk & Exposure Management |
+| `datalake` | Data Pipelines (Datalake) |
+| `dmm` | Detection Model Management |
+| `eiqs` | Endpoint Inventory |
+| `email` | Email Security |
+| `endpoint` | Endpoint Security |
+| `filesecurity` | File Security |
+| `healthcheck` | Health Check |
+| `iam` | Identity and Access Management |
+| `playbooks` | Security Playbooks |
+| `response` | Response Management |
+| `sandbox` | Sandbox Analysis |
+| `search` | Search |
+| `tags` | Tag Management |
+| `threatintel` | Threat Intelligence |
+| `workbench` | Workbench (includes Observed Attack Techniques / OAT) |
 
 ## Tools
 
