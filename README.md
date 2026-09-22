@@ -78,6 +78,8 @@ Alternatively, copy the following into your `settings.json`.
 }
 ```
 
+GitHub Copilot Chat defaults to **Ask** mode, which can only suggest changes and cannot call MCP tools. Use the mode dropdown in the Copilot Chat panel to switch to **Agent** mode so Copilot can invoke this server's tools.
+
 ### Server Options
 
 | Option | Description |
