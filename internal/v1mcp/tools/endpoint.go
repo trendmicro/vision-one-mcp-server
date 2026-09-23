@@ -370,6 +370,33 @@ func toolEndpointSecuritySchedulesList(client *v1client.V1ApiClient) mcpserver.S
 	}
 }
 
+// scheduleVEventSchema is the iCalendar VEvent shape accepted by the endpoint security
+// schedules API. dtStart, duration and rRule each only accept a restricted subset of
+// iCalendar syntax; the patterns below mirror the API's own validation so invalid values
+// are rejected before a request is ever sent. See
+// https://icalendar.org/iCalendar-RFC-5545/3-6-1-event-component.html
+var scheduleVEventSchema = map[string]any{
+	"type": "object",
+	"properties": map[string]any{
+		"dtStart": map[string]any{
+			"type":        "string",
+			"description": "iCalendar DTSTART in local time format. The schedule is triggered at the specified local time in each endpoint's time zone. (Z-suffix is not accepted)",
+			"pattern":     "^[0-9]{8}T[0-9]{6}$",
+		},
+		"duration": map[string]any{
+			"type":        "string",
+			"description": "iCalendar Duration (only days and hours are supported), e.g. P1D, PT2H, P1DT2H.",
+			"pattern":     "^P(\\d+D)?(T(\\d+H)?)?$",
+		},
+		"rRule": map[string]any{
+			"type":        "string",
+			"description": "iCalendar RRule (only DAILY, WEEKLY and MONTHLY frequencies are supported), e.g. FREQ=DAILY or FREQ=WEEKLY;BYDAY=MO,WE.",
+			"pattern":     "^FREQ=(DAILY|WEEKLY|MONTHLY)(;[A-Z]+=[^;]+)*$",
+		},
+	},
+	"required": []string{"dtStart", "duration", "rRule"},
+}
+
 func toolEndpointSecuritySchedulesCreate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
@@ -378,7 +405,7 @@ func toolEndpointSecuritySchedulesCreate(client *v1client.V1ApiClient) mcpserver
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
-			mcp.WithArray("items", mcp.Required(), mcp.Items(map[string]any{"properties": map[string]any{"description": map[string]any{"description": "Schedule description", "type": "string"}, "name": map[string]any{"description": "Schedule name", "type": "string"}, "vEvents": map[string]any{"description": "iCalendar VEvent list. Currently only accepts exactly one VEvent per schedule.", "items": map[string]any{"type": "object"}, "type": "array"}}, "required": []string{"name", "vEvents"}, "type": "object"})),
+			mcp.WithArray("items", mcp.Required(), mcp.Items(map[string]any{"properties": map[string]any{"description": map[string]any{"description": "Schedule description", "type": "string"}, "name": map[string]any{"description": "Schedule name", "type": "string"}, "vEvents": map[string]any{"description": "iCalendar VEvent list. Currently only accepts exactly one VEvent per schedule.", "items": scheduleVEventSchema, "minItems": 1, "maxItems": 1, "type": "array"}}, "required": []string{"name", "vEvents"}, "type": "object"})),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			args := request.GetArguments()
@@ -429,7 +456,7 @@ func toolEndpointSecuritySchedulesUpdate(client *v1client.V1ApiClient) mcpserver
 			mcp.WithToolAnnotation(mcp.ToolAnnotation{
 				ReadOnlyHint: toPtr(false),
 			}),
-			mcp.WithArray("items", mcp.Required(), mcp.Items(map[string]any{"properties": map[string]any{"description": map[string]any{"description": "Schedule description", "type": "string"}, "id": map[string]any{"description": "Schedule ID", "type": "string"}, "name": map[string]any{"description": "Schedule name", "type": "string"}, "vEvents": map[string]any{"description": "iCalendar VEvent list. Currently only accepts exactly one VEvent per schedule.", "items": map[string]any{"type": "object"}, "type": "array"}}, "required": []string{"id"}, "type": "object"})),
+			mcp.WithArray("items", mcp.Required(), mcp.Items(map[string]any{"properties": map[string]any{"description": map[string]any{"description": "Schedule description", "type": "string"}, "id": map[string]any{"description": "Schedule ID", "type": "string"}, "name": map[string]any{"description": "Schedule name", "type": "string"}, "vEvents": map[string]any{"description": "iCalendar VEvent list. Currently only accepts exactly one VEvent per schedule.", "items": scheduleVEventSchema, "minItems": 1, "maxItems": 1, "type": "array"}}, "required": []string{"id"}, "type": "object"})),
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			args := request.GetArguments()
