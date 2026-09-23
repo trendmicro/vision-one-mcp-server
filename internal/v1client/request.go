@@ -63,7 +63,7 @@ func (c *V1ApiClient) do(method, path string, p RequestParams) (*http.Response, 
 		body, contentType = bytes.NewReader(b), "application/json"
 	}
 
-	opts := make([]requestOptionFunc, 0, len(p.Headers)+3)
+	opts := make([]requestOptionFunc, 0, len(p.Headers))
 	if len(p.Query) > 0 {
 		opts = append(opts, withUrlParameters(p.Query))
 	}
