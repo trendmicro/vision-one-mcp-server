@@ -8,7 +8,7 @@ Some packages may only be included on certain architectures or operating systems
 
 
  - [github.com/bahlo/generic-list-go](https://pkg.go.dev/github.com/bahlo/generic-list-go) ([BSD-3-Clause](https://github.com/bahlo/generic-list-go/blob/v0.2.0/LICENSE))
- - [github.com/buger/jsonparser](https://pkg.go.dev/github.com/buger/jsonparser) ([MIT](https://github.com/buger/jsonparser/blob/v1.1.1/LICENSE))
+ - [github.com/buger/jsonparser](https://pkg.go.dev/github.com/buger/jsonparser) ([MIT](https://github.com/buger/jsonparser/blob/v1.1.2/LICENSE))
  - [github.com/google/go-querystring/query](https://pkg.go.dev/github.com/google/go-querystring/query) ([BSD-3-Clause](https://github.com/google/go-querystring/blob/v1.2.0/LICENSE))
  - [github.com/google/uuid](https://pkg.go.dev/github.com/google/uuid) ([BSD-3-Clause](https://github.com/google/uuid/blob/v1.6.0/LICENSE))
  - [github.com/invopop/jsonschema](https://pkg.go.dev/github.com/invopop/jsonschema) ([MIT](https://github.com/invopop/jsonschema/blob/v0.13.0/COPYING))

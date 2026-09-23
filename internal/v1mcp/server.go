@@ -9,7 +9,6 @@ import (
 
 	mcpserver "github.com/mark3labs/mcp-go/server"
 	"github.com/trendmicro/vision-one-mcp-server/internal/v1client"
-	"github.com/trendmicro/vision-one-mcp-server/internal/v1mcp/tools"
 )
 
 type ServerConfig struct {
@@ -18,6 +17,8 @@ type ServerConfig struct {
 	Version  string
 	Region   string
 	Host     string
+	// Toolsets limits the registered tools to the named toolsets. Empty registers all of them.
+	Toolsets []string
 }
 
 func NewMcpServer(cfg ServerConfig) (*mcpserver.MCPServer, error) {
@@ -37,24 +38,16 @@ func NewMcpServer(cfg ServerConfig) (*mcpserver.MCPServer, error) {
 	}
 	client.UserAgent = fmt.Sprintf("trend-vision-one-mcp-server/%s", cfg.Version)
 
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyIAM)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyCREM)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyCloudPosture)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyCloudRiskManagement)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyCloudPostureBeta)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyWorkench)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyCAM)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyEmail)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyContainer)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyEndpoint)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyAISecurity)
-	addReadOnlyToolset(s, client, tools.ToolsetsReadOnlyThreatIntel)
+	selected, err := selectedToolsets(cfg.Toolsets)
+	if err != nil {
+		return nil, err
+	}
 
-	if !cfg.ReadOnly {
-		addWriteToolset(s, client, tools.ToolsetsWriteCloudPosture)
-		addWriteToolset(s, client, tools.ToolsetsWriteCloudPostureBeta)
-		addWriteToolset(s, client, tools.ToolsetsWriteIAM)
-		addWriteToolset(s, client, tools.ToolsetsWriteThreatIntel)
+	for _, d := range selected {
+		addReadOnlyToolset(s, client, d.read)
+		if !cfg.ReadOnly {
+			addWriteToolset(s, client, d.write)
+		}
 	}
 
 	return s, nil

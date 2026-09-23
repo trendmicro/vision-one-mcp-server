@@ -29,6 +29,7 @@ var ToolsetsWriteThreatIntel = []func(*v1client.V1ApiClient) mcpserver.ServerToo
 	toolThreatIntelExceptionsDelete,
 	toolThreatIntelIntelligenceReportsDelete,
 	toolThreatIntelSweepTrigger,
+	toolThreatintelIntelligenceReportsCreate,
 }
 
 func toolThreatIntelSuspiciousObjectsList(client *v1client.V1ApiClient) mcpserver.ServerTool {
@@ -781,6 +782,34 @@ func toolThreatIntelFeedFilterDefinitionGet(client *v1client.V1ApiClient) mcpser
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			resp, err := client.ThreatIntelGetFeedFilterDefinition()
 			return handleStatusResponse(resp, err, http.StatusOK, "failed to get feed filter definition")
+		},
+	}
+}
+
+func toolThreatintelIntelligenceReportsCreate(client *v1client.V1ApiClient) mcpserver.ServerTool {
+	return mcpserver.ServerTool{
+		Tool: mcp.NewTool(
+			"threatintel_intelligence_reports_create",
+			mcp.WithDescription("Import STIX and CSV files as custom intelligence reports. Extracts suspicious object data from imported CSV/STIX files and then creates a custom intelligence report."),
+			mcp.WithToolAnnotation(mcp.ToolAnnotation{
+				ReadOnlyHint: toPtr(false),
+			}),
+			mcp.WithString("file", mcp.Required(), mcp.Description("The file to be imported (encoded in UTF-8). Notes: Note: * When importing a CSV file, verify that the file's MIME type is \"text/csv\". * When importing a STIX file, verify that the file's MIME type is \"application/stix+json\". Path to a local file to upload.")),
+			mcp.WithString("reportName", mcp.Required(), mcp.Description("The name of a custom intelligence report. When importing STIX files, leave this field blank if you only want to import reports with a report name using predefined STIX attributes. Do not include single quotation marks.")),
+		),
+		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
+			args := request.GetArguments()
+			params, err := buildRequestParams(args, requestSpec{
+				Body:       bodyMultipart,
+				BodyFields: []paramDef{{Name: "reportName", Kind: kindString, Required: true}},
+				FileFields: []paramDef{{Name: "file", Kind: kindString, Required: true}},
+			})
+			if err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+
+			resp, err := client.ThreatintelIntelligenceReportsCreate(params)
+			return handleResponse(resp, err, "failed to import STIX and CSV files as custom intelligence reports")
 		},
 	}
 }

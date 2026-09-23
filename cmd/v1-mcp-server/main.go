@@ -8,6 +8,7 @@ import (
 	"os"
 	"runtime/debug"
 	"slices"
+	"strings"
 
 	"github.com/trendmicro/vision-one-mcp-server/internal/v1mcp"
 )
@@ -24,6 +25,8 @@ func run() error {
 	v1Region := flag.String("region", "", "set the region of your vision one account.")
 	showVersion := flag.Bool("version", false, "print version information")
 	host := flag.String("host", "", "set the Trend Vision One endpoint you want to use. Only useful for interacting with internal environments.")
+
+	toolsets := flag.String("toolsets", v1mcp.AllToolsets, "comma separated list of toolsets to enable, or \"all\". Available: "+strings.Join(v1mcp.ToolsetNames(), ", "))
 
 	flag.Parse()
 
@@ -47,6 +50,11 @@ func run() error {
 		}
 	}
 
+	selectedToolsets, err := v1mcp.ParseToolsets(*toolsets)
+	if err != nil {
+		return err
+	}
+
 	version := getVersion()
 
 	serverCfg := v1mcp.ServerConfig{
@@ -55,6 +63,7 @@ func run() error {
 		Region:   *v1Region,
 		Version:  version,
 		Host:     *host,
+		Toolsets: selectedToolsets,
 	}
 
 	return v1mcp.RunMcpStdioServer(serverCfg)
@@ -63,12 +72,16 @@ func run() error {
 func validateRegion(region string) error {
 	validRegions := []string{
 		"au",
+		"ca",
 		"eu",
+		"id",
 		"in",
 		"jp",
-		"sg",
-		"us",
 		"mea",
+		"sg",
+		"uk",
+		"us",
+		"za",
 	}
 
 	b, _ := json.Marshal(validRegions)

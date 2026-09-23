@@ -133,3 +133,7 @@ func (c *V1ApiClient) ThreatIntelListFeeds(contextualFilter string, queryParams 
 func (c *V1ApiClient) ThreatIntelGetFeedFilterDefinition() (*http.Response, error) {
 	return c.genericGet("v3.0/threatintel/feeds/filterDefinition")
 }
+
+func (c *V1ApiClient) ThreatintelIntelligenceReportsCreate(p RequestParams) (*http.Response, error) {
+	return c.do(http.MethodPost, "v3.0/threatintel/intelligenceReports", p)
+}
