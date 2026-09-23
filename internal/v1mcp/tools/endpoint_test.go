@@ -70,3 +70,60 @@ func TestScheduleVEventSchemaConstraints(t *testing.T) {
 		})
 	}
 }
+
+// TestValidateScheduleItems guards against the schedule create/update tools silently
+// forwarding an invalid vEvent to the Trend Vision One API, which responds with an opaque
+// error code (e.g. "Error_001001") and no explanation. validateScheduleItems must catch the
+// same violations client-side and return a specific, human-readable error instead.
+func TestValidateScheduleItems(t *testing.T) {
+	validItem := map[string]any{
+		"name": "test",
+		"vEvents": []any{
+			map[string]any{
+				"dtStart":  "20261001T020000",
+				"duration": "PT2H",
+				"rRule":    "FREQ=DAILY",
+			},
+		},
+	}
+
+	t.Run("valid item passes", func(t *testing.T) {
+		err := validateScheduleItems(map[string]any{"items": []any{validItem}})
+		require.NoError(t, err)
+	})
+
+	t.Run("no items is fine", func(t *testing.T) {
+		require.NoError(t, validateScheduleItems(map[string]any{}))
+	})
+
+	for _, tc := range []struct {
+		name    string
+		field   string
+		value   string
+		wantErr string
+	}{
+		{name: "bad dtStart", field: "dtStart", value: "2026-10-01T02:00:00Z", wantErr: "invalid dtStart"},
+		{name: "bad duration unit", field: "duration", value: "P1W", wantErr: "invalid duration"},
+		{name: "bad duration minutes", field: "duration", value: "PT30M", wantErr: "invalid duration"},
+		{name: "bad rRule frequency", field: "rRule", value: "FREQ=YEARLY", wantErr: "invalid rRule"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			vEvent := map[string]any{
+				"dtStart":  "20261001T020000",
+				"duration": "PT2H",
+				"rRule":    "FREQ=DAILY",
+			}
+			vEvent[tc.field] = tc.value
+
+			item := map[string]any{
+				"name":    "test",
+				"vEvents": []any{vEvent},
+			}
+
+			err := validateScheduleItems(map[string]any{"items": []any{item}})
+			require.Error(t, err)
+			require.Contains(t, err.Error(), tc.wantErr)
+			require.Contains(t, err.Error(), tc.value)
+		})
+	}
+}

@@ -2,7 +2,9 @@ package tools
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"regexp"
 
 	"github.com/mark3labs/mcp-go/mcp"
 	mcpserver "github.com/mark3labs/mcp-go/server"
@@ -397,6 +399,55 @@ var scheduleVEventSchema = map[string]any{
 	"required": []string{"dtStart", "duration", "rRule"},
 }
 
+var (
+	scheduleDTStartPattern  = regexp.MustCompile(`^[0-9]{8}T[0-9]{6}$`)
+	scheduleDurationPattern = regexp.MustCompile(`^P(\d+D)?(T(\d+H)?)?$`)
+	scheduleRRulePattern    = regexp.MustCompile(`^FREQ=(DAILY|WEEKLY|MONTHLY)(;[A-Z]+=[^;]+)*$`)
+)
+
+// validateScheduleItems checks every vEvent in a schedule create/update request against the
+// same constraints advertised in scheduleVEventSchema. The Trend Vision One API enforces these
+// server-side, but its error response for a violation is an opaque error code with no
+// explanation (e.g. {"error":{"code":"Error_001001","message":"TraceId: ..."}}), so callers
+// need this check to get a specific, human-readable error before the request is ever sent.
+func validateScheduleItems(args map[string]any) error {
+	items, ok := args["items"].([]any)
+	if !ok {
+		return nil
+	}
+
+	for _, item := range items {
+		itemMap, ok := item.(map[string]any)
+		if !ok {
+			continue
+		}
+
+		vEvents, ok := itemMap["vEvents"].([]any)
+		if !ok {
+			continue
+		}
+
+		for _, ve := range vEvents {
+			veMap, ok := ve.(map[string]any)
+			if !ok {
+				continue
+			}
+
+			if dtStart, ok := veMap["dtStart"].(string); ok && !scheduleDTStartPattern.MatchString(dtStart) {
+				return fmt.Errorf("invalid dtStart %q: expected iCalendar local time format YYYYMMDDTHHMMSS (e.g. 20261001T020000)", dtStart)
+			}
+			if duration, ok := veMap["duration"].(string); ok && !scheduleDurationPattern.MatchString(duration) {
+				return fmt.Errorf("invalid duration %q: only days and/or hours are supported (e.g. P1D, PT2H, P1DT2H)", duration)
+			}
+			if rRule, ok := veMap["rRule"].(string); ok && !scheduleRRulePattern.MatchString(rRule) {
+				return fmt.Errorf("invalid rRule %q: only DAILY, WEEKLY, and MONTHLY frequencies are supported (e.g. FREQ=DAILY, FREQ=WEEKLY;BYDAY=MO,WE)", rRule)
+			}
+		}
+	}
+
+	return nil
+}
+
 func toolEndpointSecuritySchedulesCreate(client *v1client.V1ApiClient) mcpserver.ServerTool {
 	return mcpserver.ServerTool{
 		Tool: mcp.NewTool(
@@ -409,6 +460,10 @@ func toolEndpointSecuritySchedulesCreate(client *v1client.V1ApiClient) mcpserver
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			args := request.GetArguments()
+			if err := validateScheduleItems(args); err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+
 			params, err := buildRequestParams(args, requestSpec{
 				Body: bodyArray,
 			})
@@ -460,6 +515,10 @@ func toolEndpointSecuritySchedulesUpdate(client *v1client.V1ApiClient) mcpserver
 		),
 		Handler: func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 			args := request.GetArguments()
+			if err := validateScheduleItems(args); err != nil {
+				return mcp.NewToolResultError(err.Error()), nil
+			}
+
 			params, err := buildRequestParams(args, requestSpec{
 				Body: bodyArray,
 			})
